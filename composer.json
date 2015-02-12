@@ -13,8 +13,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Gherkins\\RegExpBuilderPHP\\": "src",
-      "Gherkins\\RegExpBuilderPHP\\Test\\": "tests"
+      "Gherkins\\RegExpBuilderPHP\\": "src"
     }
   }
 }
