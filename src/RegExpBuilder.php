@@ -111,17 +111,13 @@ class RegExpBuilder
         return $literal;
     }
 
-
     public function _incrementGroupNumbering($literal, $increment)
     {
-
         if ($increment > 0) {
-            //fixme: port js replace
-//        $literal = literal . replace(/[^\\]\\\d +/g, function (groupReference) {
-//            $groupNumber = parseInt(groupReference . substring(2)) + increment;
-//
-//            return groupReference . substring(0, 2) + groupNumber;
-//        });
+            $literal = preg_replace_callback('/[^\\]\\\d +/', function($groupReference) use($increment){
+                $groupNumber = (integer)substr($groupReference, 2)  + $increment;
+                return substr($groupReference, 0,2) + $groupNumber;
+            }, $literal);
         }
 
         return $literal;
