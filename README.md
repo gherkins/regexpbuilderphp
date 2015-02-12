@@ -1,6 +1,6 @@
 # regexpbuilderphp
 
-https://api.travis-ci.org/gherkins/regexpbuilderphp.svg
 
+[![Build Status](https://api.travis-ci.org/gherkins/regexpbuilderphp.svg)](https://travis-ci.org/gherkins/regexpbuilderphp)
 
-this is a PHP port of https://github.com/thebinarysearchtree/regexpbuilderjs
+PHP port of https://github.com/thebinarysearchtree/regexpbuilderjs
