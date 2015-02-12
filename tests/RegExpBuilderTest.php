@@ -190,7 +190,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $regEx = $this->r
             ->startOfLine()
-            ->exactly(3)->from(["p", "q", "r"])
+            ->exactly(3)->from(array("p", "q", "r"))
             ->endOfLine()
             ->getRegExp();
 
@@ -207,7 +207,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $regEx = $this->r
             ->startOfLine()
-            ->exactly(3)->notFrom(["p", "q", "r"])
+            ->exactly(3)->notFrom(array("p", "q", "r"))
             ->endOfLine()
             ->getRegExp();
 
