@@ -17,14 +17,23 @@ Usage
 
     $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
 
+
+
     $regEx = $builder
-            ->startOfLine()
-            ->exactly(1)
-            ->of("p")
-            ->getRegExp();
+        ->startOfLine()
+        ->exactly(1)
+        ->of("p")
+        ->getRegExp();
 
 
-    $regEx->test("p");  // -> true
-    $regEx->test("qp"); // -> false
+    $regEx->test("p");  // true
+    $regEx->test("qp"); // false
         
         
+        
+    $regEx = $builder
+        ->exactly(1)->of("dart")
+        ->ahead($builder->another()->exactly(1)->of("lang"))
+        ->getRegExp();
+    
+    $regEx->test("dartlang"); // true
