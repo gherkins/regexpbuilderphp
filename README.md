@@ -38,3 +38,9 @@ Usage
     
     $regEx->test("dartlang"); // true
     $regEx->test("langdart"); // false
+    
+
+API documentation
+---
+
+https://github.com/thebinarysearchtree/regexpbuilderjs/wiki
