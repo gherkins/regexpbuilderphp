@@ -580,12 +580,7 @@ class RegExpBuilder
 
     public function _sanitize($s)
     {
-
-        //fixme: port js replace
-        $matches = array();
-        preg_match('/([.*+?^=!:${}()|\[\]\/\\\\])/', $s, $matches);
-
-        return $s;
+        return preg_replace('#([.*+?^=!:${}()|\[\]/\\\\])#', "\\$1", $s);
     }
 
     public function another(){
