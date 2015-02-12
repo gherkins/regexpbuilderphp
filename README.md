@@ -37,3 +37,4 @@ Usage
         ->getRegExp();
     
     $regEx->test("dartlang"); // true
+    $regEx->test("langdart"); // false
