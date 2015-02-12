@@ -6,7 +6,7 @@
  * Time: 17:06
  */
 
-require_once "RegExp.php";
+namespace Gherkins\RegExpBuilderPHP;
 
 class RegExpBuilder
 {

@@ -1,5 +1,7 @@
 <?php
 
+namespace Gherkins\RegExpBuilderPHP;
+
 class RegExp
 {
 

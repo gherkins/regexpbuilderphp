@@ -1,17 +1,18 @@
 <?php
 
+namespace Gherkins\RegExpBuilderPHP\Test;
+
 class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @var RegExpBuilder
+     * @var \Gherkins\RegExpBuilderPHP\RegExpBuilder
      */
     public $r;
 
     public function setUp()
     {
-        require_once __DIR__ . "/../RegExpBuilder.php";
-        $this->r = new RegExpBuilder();
+        $this->r = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
     }
 
     public function testStartOfLine()
@@ -245,7 +246,6 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($regEx->exec("pprrrrpprrpp")[0] == "pprrrrpp");
     }
-
 
     public function testAhead()
     {
