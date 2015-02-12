@@ -255,11 +255,13 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->ahead($this->r->another()->exactly(1)->of("lang"))
             ->getRegExp();
 
-
-        $this->assertArrayHasKey(0, $regEx->exec("dartlang"));
-        $this->assertTrue($regEx->exec("dartlang")[0] == "dart");
+        $this->assertTrue($regEx->test("dartlang"));
+        $this->assertTrue($regEx->test("dartlanglang"));
+        $this->assertTrue($regEx->test("langdartlang"));
 
         $this->assertFalse($regEx->test("dartpqr"));
+        $this->assertFalse($regEx->test("langdart"));
+
     }
 
     public function testNotAhead()
