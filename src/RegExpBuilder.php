@@ -116,6 +116,7 @@ class RegExpBuilder
     {
 
         if ($increment > 0) {
+            //fixme: port js replace
 //        $literal = literal . replace(/[^\\]\\\d +/g, function (groupReference) {
 //            $groupNumber = parseInt(groupReference . substring(2)) + increment;
 //
@@ -580,6 +581,7 @@ class RegExpBuilder
     public function _sanitize($s)
     {
 
+        //fixme: port js replace
         $matches = array();
         preg_match('/([.*+?^=!:${}()|\[\]\/\\\\])/', $s, $matches);
 
