@@ -70,8 +70,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
 
 
         $combined = $this->r->getNew()
-            ->either($builder1)
-            ->orLike($builder2);
+            ->eitherIs($builder1)
+            ->orIs($builder2);
 
         $this->assertTrue($combined->getRegExp()->test("€ 128,99"));     //true
         $this->assertTrue($combined->getRegExp()->test("€ 81,99"));      //true
@@ -145,8 +145,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($builder2->getRegExp()->test("€452.000,99"));
 
         $combined = $this->r->getNew()
-            ->either($builder1)
-            ->orLike($builder2);
+            ->eitherIs($builder1)
+            ->orIs($builder2);
 
         $this->assertTrue($combined->getRegExp()->test("€128,99"));
         $this->assertTrue($combined->getRegExp()->test("€81,99"));
@@ -615,8 +615,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $regEx = $this->r
             ->startOfLine()
-            ->either($this->r->getNew()->exactly(1)->of("p"))
-            ->orLike($this->r->getNew()->exactly(2)->of("q"))
+            ->eitherIs($this->r->getNew()->exactly(1)->of("p"))
+            ->orIs($this->r->getNew()->exactly(2)->of("q"))
             ->endOfLine()
             ->getRegExp();
 
@@ -632,9 +632,9 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     {
 
         $regEx = $this->r
-            ->either($this->r->getNew()->exactly(1)->of("p"))
-            ->orLike($this->r->getNew()->exactly(1)->of("q"))
-            ->orLike($this->r->getNew()->exactly(1)->of("r"))
+            ->eitherIs($this->r->getNew()->exactly(1)->of("p"))
+            ->orIs($this->r->getNew()->exactly(1)->of("q"))
+            ->orIs($this->r->getNew()->exactly(1)->of("r"))
             ->getRegExp();
 
         $this->assertTrue($regEx->test("p"));
@@ -647,8 +647,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     public function testEitherOr()
     {
         $regEx = $this->r
-            ->either("p")
-            ->orLike("q")
+            ->eitherIs("p")
+            ->orIs("q")
             ->getRegExp();
 
         $this->assertTrue($regEx->test("p"));

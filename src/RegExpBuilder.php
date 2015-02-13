@@ -249,17 +249,17 @@ class RegExpBuilder
         return $this->endOfInput();
     }
 
-    public function either($r)
+    public function eitherIs($r)
     {
         if (is_string($r)) {
-            return $this->_eitherLike($this->getNew()->exactly(1)->of($r));
+            return $this->_eitherIs($this->getNew()->exactly(1)->of($r));
         }
 
-        return $this->_eitherLike($r);
+        return $this->_eitherIs($r);
     }
 
 
-    private function _eitherLike($r)
+    private function _eitherIs($r)
     {
         $this->_flushState();
         $this->_either = $this->_combineGroupNumberingAndGetLiteral($r);
@@ -267,17 +267,17 @@ class RegExpBuilder
         return $this;
     }
 
-    public function orLike($r)
+    public function orIs($r)
     {
 
         if (is_string($r)) {
-            return $this->_orLike($this->getNew()->exactly(1)->of($r));
+            return $this->_orIs($this->getNew()->exactly(1)->of($r));
         }
 
-        return $this->_orLike($r);
+        return $this->_orIs($r);
     }
 
-    private function _orLike($r)
+    private function _orIs($r)
     {
         $either = $this->_either;
         $or     = $this->_combineGroupNumberingAndGetLiteral($r);
