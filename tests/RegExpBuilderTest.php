@@ -101,6 +101,73 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($regEx->test("425asd"));
     }
 
+    public function testAny()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->any()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("a.jpg"));
+        $this->assertTrue($regEx->test("a.b_asdasd"));
+        $this->assertTrue($regEx->test("4"));
+
+        $this->assertFalse($regEx->test(""));
+    }
+
+    public function testOfAny()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->exactly(2)
+            ->ofAny()
+            ->then("_")
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("12_123123.jpg"));
+        $this->assertTrue($regEx->test("ab_asdasd"));
+
+        $this->assertFalse($regEx->test("425asd"));
+    }
+
+    public function testOfAny2()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->exactly(3)->ofAny()
+            ->endOfLine()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("pqr"));
+    }
+
+    public function testAnything()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->anything()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("a.jpg"));
+        $this->assertTrue($regEx->test("a.b_asdasd"));
+        $this->assertTrue($regEx->test("4"));
+    }
+
+    public function testAnythingBut()
+    {
+        $regEx = $this->r
+            ->startOfInput()
+            ->anythingBut("admin")
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("a.jpg"));
+        $this->assertTrue($regEx->test("a.b_asdasd"));
+        $this->assertTrue($regEx->test("4"));
+
+        $this->assertFalse($regEx->test("admin"));
+
+    }
+
     public function testLowerCasew()
     {
         $regEx = $this->r
@@ -451,17 +518,6 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($regEx->test("p p p p pp"));
     }
 
-
-    public function testOfAny()
-    {
-        $regEx = $this->r
-            ->startOfLine()
-            ->exactly(3)->ofAny()
-            ->endOfLine()
-            ->getRegExp();
-
-        $this->assertTrue($regEx->test("pqr"));
-    }
 
     public function testOfGroup()
     {
