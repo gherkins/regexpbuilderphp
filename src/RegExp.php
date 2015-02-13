@@ -15,10 +15,20 @@ class RegExp
      */
     protected $_flags;
 
+    /**
+     * @var String
+     */
+    protected $_method = "preg_match";
+
     public function __construct($expr, $flags)
     {
         $this->_expr  = $expr;
         $this->_flags = $flags;
+
+        if (strpos($this->_flags, "g") !== false) {
+            $this->_flags  = str_replace("g", "", $this->_flags);
+            $this->_method = "preg_match_all";
+        }
     }
 
     /**
@@ -53,9 +63,13 @@ class RegExp
      */
     public function test($string)
     {
-        return (bool)preg_match(
-            sprintf("/%s/%s", $this->_expr, $this->_flags),
-            $string
+
+        return (bool)call_user_func_array(
+            $this->_method,
+            array(
+                sprintf("/%s/%s", $this->_expr, $this->_flags),
+                $string
+            )
         );
     }
 
@@ -68,10 +82,13 @@ class RegExp
     public function exec($string)
     {
         $matches = array();
-        preg_match(
-            sprintf("/%s/%s", $this->_expr, $this->_flags),
-            $string,
-            $matches
+        call_user_func_array(
+            $this->_method,
+            array(
+                sprintf("/%s/%s", $this->_expr, $this->_flags),
+                $string,
+                &$matches
+            )
         );
 
         return $matches;

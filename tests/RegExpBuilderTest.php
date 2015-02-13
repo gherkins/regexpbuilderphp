@@ -317,6 +317,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     public function testLetterDigit()
     {
         $regEx = $this->r
+            ->ignoreCase()
+            ->globalMatch()
             ->startOfLine()
             ->letter()
             ->append($this->r->getNew()->digit())
