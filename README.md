@@ -36,7 +36,7 @@ $builder1->getRegExp()->test("€ 81,99");      //true
    
                  
 $builder2 = $builder
-    ->getNew()                    // <- the getNew() method return a new build instance !
+    ->getNew()                                // <-  getNew() returns a new build instance !
     ->find("€")
     ->exactly(1)->whitespace()
     ->min(1)->digits()
@@ -52,7 +52,7 @@ $builder2->getRegExp()->test("€ 452.000,99"); //true
     
    
 $combined = $builder
-    ->getNew()                    // <- the getNew() method return a new build instance !
+    ->getNew()                                // <-  getNew() returns a new build instance !
     ->either($builder1)
     ->orLike($builder2);
     
