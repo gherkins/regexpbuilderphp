@@ -34,7 +34,7 @@ Usage
         
     $regEx = $builder
         ->exactly(1)->of("dart")
-        ->ahead($builder->another()->exactly(1)->of("lang"))
+        ->ahead($builder->getNew()->exactly(1)->of("lang"))
         ->getRegExp();
     
     $regEx->test("dartlang"); // true

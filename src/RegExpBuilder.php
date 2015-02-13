@@ -645,7 +645,7 @@ class RegExpBuilder
      *
      * @return RegExpBuilder
      */
-    public function another(){
+    public function getNew(){
         $class = get_class($this);
         return new $class;
     }
