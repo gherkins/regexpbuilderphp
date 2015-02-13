@@ -420,6 +420,10 @@ class RegExpBuilder
         return $this;
     }
 
+    /**
+     * @param $s
+     * @return $this
+     */
     public function then($s)
     {
         return $this->exactly(1)->of($s);
