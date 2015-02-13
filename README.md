@@ -27,18 +27,10 @@ Usage
         ->getRegExp();
 
 
-    $regEx->test("p");  // true
+    $regEx->test("pq");  // true
     $regEx->test("qp"); // false
         
-        
-        
-    $regEx = $builder
-        ->exactly(1)->of("dart")
-        ->ahead($builder->getNew()->exactly(1)->of("lang"))
-        ->getRegExp();
-    
-    $regEx->test("dartlang"); // true
-    $regEx->test("langdart"); // false
+Take a look at the [tests](tests/RegExpBuilderTest.php) for more examples
     
 
 API documentation
