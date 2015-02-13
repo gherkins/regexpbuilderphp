@@ -450,7 +450,7 @@ class RegExpBuilder
     public function anythingBut($s)
     {
         if (strlen($s) === 1) {
-            return $this->min(0)->notFrom(array($s));
+            return $this->min(1)->notFrom(array($s));
         }
         $this->notAhead($this->getNew()->exactly(1)->of($s));
 

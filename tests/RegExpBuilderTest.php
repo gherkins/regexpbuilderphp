@@ -168,6 +168,22 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testAnythingBut2()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->anythingBut("Y")
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("a.jpg"));
+        $this->assertTrue($regEx->test("a.b_asdasd"));
+        $this->assertTrue($regEx->test("4"));
+
+        $this->assertFalse($regEx->test("YY"));
+        $this->assertFalse($regEx->test("Y"));
+
+    }
+
     public function testLowerCasew()
     {
         $regEx = $this->r
