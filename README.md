@@ -18,14 +18,11 @@ Usage
 
     $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
 
-
-
     $regEx = $builder
         ->startOfLine()
         ->exactly(1)
         ->of("p")
         ->getRegExp();
-
 
     $regEx->test("pq");  // true
     $regEx->test("qp"); // false
