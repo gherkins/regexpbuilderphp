@@ -2,6 +2,7 @@
 
 
 [![Build Status](https://api.travis-ci.org/gherkins/regexpbuilderphp.svg)](https://travis-ci.org/gherkins/regexpbuilderphp)
+[![Coverage Status](https://coveralls.io/repos/gherkins/regexpbuilderphp/badge.svg?branch=master)](https://coveralls.io/r/gherkins/regexpbuilderphp?branch=master)
 
 PHP port of https://github.com/thebinarysearchtree/regexpbuilderjs
 
