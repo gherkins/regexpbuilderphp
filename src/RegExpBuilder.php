@@ -19,7 +19,7 @@ class RegExpBuilder
     /**
      * @var array
      */
-    protected $_literal    = [];
+    protected $_literal    = array();
 
     /**
      * @var int
