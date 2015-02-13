@@ -151,7 +151,10 @@ class RegExpBuilder
             return $this->_like;
         }
 
+        // @codeCoverageIgnoreStart
+        //won't happen...
         return null;
+        // @codeCoverageIgnoreEnd
     }
 
     public function getLiteral()
