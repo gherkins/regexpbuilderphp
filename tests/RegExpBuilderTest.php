@@ -33,6 +33,48 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testLettersDigits()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->min(3)
+            ->letters()
+            ->append($this->r->getNew()->min(2)->digits())
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("asf24"));
+
+        $this->assertFalse($regEx->test("af24"));
+        $this->assertFalse($regEx->test("afs4"));
+        $this->assertFalse($regEx->test("234asas"));
+
+    }
+
+    public function testNotLetter()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->notLetter()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("234asd"));
+        $this->assertFalse($regEx->test("asd425"));
+    }
+
+    public function testLetterDigit()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->letter()
+            ->append($this->r->getNew()->digit())
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("a5"));
+
+        $this->assertFalse($regEx->test("5a"));
+
+    }
+
     public function testTab()
     {
         $regEx = $this->r
@@ -75,8 +117,6 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($regEx->test(" pdr "));
         $this->assertFalse($regEx->test("  pd r "));
         $this->assertFalse($regEx->test(" p dr "));
-
-
 
     }
 
@@ -123,8 +163,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $regEx = $this->r
             ->startOfLine()
-            ->either($this->r->another()->exactly(1)->of("p"))
-            ->orLike($this->r->another()->exactly(2)->of("q"))
+            ->either($this->r->getNew()->exactly(1)->of("p"))
+            ->orLike($this->r->getNew()->exactly(2)->of("q"))
             ->endOfLine()
             ->getRegExp();
 
@@ -140,9 +180,9 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     {
 
         $regEx = $this->r
-            ->either($this->r->another()->exactly(1)->of("p"))
-            ->orLike($this->r->another()->exactly(1)->of("q"))
-            ->orLike($this->r->another()->exactly(1)->of("r"))
+            ->either($this->r->getNew()->exactly(1)->of("p"))
+            ->orLike($this->r->getNew()->exactly(1)->of("q"))
+            ->orLike($this->r->getNew()->exactly(1)->of("r"))
             ->getRegExp();
 
         $this->assertTrue($regEx->test("p"));
@@ -301,7 +341,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $regEx = $this->r
             ->startOfLine()
             ->exactly(2)->like(
-                $this->r->another()
+                $this->r->getNew()
                     ->min(1)->of("p")
                     ->min(2)->of("q")
             )
@@ -332,7 +372,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $regEx = $this->r
             ->exactly(1)->of("dart")
-            ->ahead($this->r->another()->exactly(1)->of("lang"))
+            ->ahead($this->r->getNew()->exactly(1)->of("lang"))
             ->getRegExp();
 
         $this->assertTrue($regEx->test("dartlang"));
@@ -348,7 +388,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $regEx = $this->r
             ->exactly(1)->of("dart")
-            ->notAhead($this->r->another()->exactly(1)->of("pqr"))
+            ->notAhead($this->r->getNew()->exactly(1)->of("pqr"))
             ->getRegExp();
 
         $this->assertTrue($regEx->test("dartlang"));
