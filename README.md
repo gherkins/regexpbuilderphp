@@ -11,7 +11,7 @@ Installation
 ----
 
 ```text
-composer require gherkins/regexpbuilderphp
+composer require gherkins/regexpbuilderphp:dev-master
 ```
 
 
