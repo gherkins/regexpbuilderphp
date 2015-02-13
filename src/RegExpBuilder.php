@@ -245,9 +245,7 @@ class RegExpBuilder
     public function either($r)
     {
         if (is_string($r)) {
-            $builder = new RegExpBuilder();
-
-            return $this->_eitherLike($builder->exactly(1)->of($r));
+            return $this->_eitherLike($this->getNew()->exactly(1)->of($r));
         }
 
         return $this->_eitherLike($r);
@@ -266,9 +264,7 @@ class RegExpBuilder
     {
 
         if (is_string($r)) {
-            $builder = new RegExpBuilder();
-
-            return $this->_orLike($builder->exactly(1)->of($r));
+            return $this->_orLike($this->getNew()->exactly(1)->of($r));
         }
 
         return $this->_orLike($r);
@@ -297,10 +293,7 @@ class RegExpBuilder
     {
 
         if (is_string($r)) {
-            $builder = new RegExpBuilder();
-
-            return $this->notAhead($builder->exactly(1)->of($r));
-
+            return $this->notAhead($this->getNew()->exactly(1)->of($r));
         }
 
         return $this->notAhead($r);
@@ -459,12 +452,14 @@ class RegExpBuilder
         if (strlen($s) === 1) {
             return $this->min(0)->notFrom(array($s));
         }
-        $builder = new RegExpBuilder();
-        $this->notAhead($builder->exactly(1)->of($s));
+        $this->notAhead($this->getNew()->exactly(1)->of($s));
 
         return $this->min(0)->ofAny();
     }
 
+    /**
+     * @return $this
+     */
     public function any()
     {
         return $this->exactly(1)->ofAny();
@@ -480,9 +475,7 @@ class RegExpBuilder
 
     public function lineBreaks()
     {
-        $builder = new RegExpBuilder();
-
-        return $this->like($builder->lineBreak());
+        return $this->like($this->getNew()->lineBreak());
     }
 
 
@@ -522,9 +515,7 @@ class RegExpBuilder
 
     public function tabs()
     {
-        $builder = new RegExpBuilder();
-
-        return $this->like($builder->tab());
+        return $this->like($this->getNew()->tab());
     }
 
     public function digit()
@@ -547,16 +538,12 @@ class RegExpBuilder
     public function digits()
     {
 
-        $builder = new RegExpBuilder();
-
-        return $this->like($builder->digit());
+        return $this->like($this->getNew()->digit());
     }
 
     public function notDigits()
     {
-        $builder = new RegExpBuilder();
-
-        return $this->like($builder->notDigit());
+        return $this->like($this->getNew()->notDigit());
     }
 
     public function letter()
