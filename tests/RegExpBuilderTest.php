@@ -101,7 +101,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($regEx->test("425asd"));
     }
 
-    public function testLowerCaseLetter()
+    public function testLowerCasew()
     {
         $regEx = $this->r
             ->startOfLine()
@@ -244,6 +244,19 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->getRegExp();
 
         $this->assertTrue($regEx->test("\tpdr\t"));
+    }
+
+    public function testNotWhitespace()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->notWhitespace()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("a234asd"));
+
+        $this->assertFalse($regEx->test(" 45asd"));
+        $this->assertFalse($regEx->test("\t45asd"));
     }
 
 
