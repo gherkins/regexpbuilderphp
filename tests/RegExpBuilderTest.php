@@ -33,7 +33,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    public function testUsageExample(){
+    public function testUsageExample()
+    {
         $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
 
 
@@ -48,7 +49,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($builder1->getRegExp()->test("€ 128,99"));     //true
         $this->assertTrue($builder1->getRegExp()->test("€ 81,99"));      //true
 
-
+        $this->assertFalse($builder1->getRegExp()->test("€ 1.228,99"));   //true
+        $this->assertFalse($builder1->getRegExp()->test("€ 452.000,99")); //true
 
         $builder2 = $builder->getNew()
             ->find("€")
@@ -63,6 +65,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($builder2->getRegExp()->test("€ 1.228,99"));   //true
         $this->assertTrue($builder2->getRegExp()->test("€ 452.000,99")); //true
 
+        $this->assertFalse($builder2->getRegExp()->test("€ 128,99"));     //true
+        $this->assertFalse($builder2->getRegExp()->test("€ 81,99"));      //true
 
 
         $combined = $this->r->getNew()
