@@ -16,6 +16,23 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->r = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
     }
 
+    public function testRegExp()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->exactly(1)
+            ->of("p")
+            ->getRegExp();
+
+
+        $this->assertTrue(is_string($regEx->getFlags()));
+        $this->assertTrue($regEx->getFlags() === "m");
+
+        $this->assertTrue(is_string($regEx->__toString()));
+        $this->assertTrue(is_string($regEx->getExpression()));
+
+    }
+
     public function testStartOfLine()
     {
         $regEx = $this->r
