@@ -32,6 +32,8 @@ $builder1 = $builder
     
 $builder1->getRegExp()->test("€ 128,99");     //true
 $builder1->getRegExp()->test("€ 81,99");      //true
+
+$builder1->getRegExp()->test("€ 1.228,99");   //false
     
    
                  
@@ -49,15 +51,18 @@ $builder2 = $builder
 $builder2->getRegExp()->test("€ 1.228,99");   //true
 $builder2->getRegExp()->test("€ 452.000,99"); //true
     
+$builder2->getRegExp()->test("€ 81,99");      //false
+
     
    
 $combined = $builder
     ->getNew()                                // <-  getNew() returns a new build instance !
-    ->either($builder1)
-    ->orLike($builder2);
+    ->eitherIs($builder1)
+    ->orIs($builder2);
     
 $combined->getRegExp()->test("€ 128,99");     //true
 $combined->getRegExp()->test("€ 81,99");      //true
+
 $combined->getRegExp()->test("€ 1.228,99");   //true
 $combined->getRegExp()->test("€ 452.000,99"); //true
 ```
