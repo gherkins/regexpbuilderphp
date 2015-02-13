@@ -59,6 +59,42 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function testWhiteSpace()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->exactly(2)->whitespace()
+            ->then("p")
+            ->then("d")
+            ->then("r")
+            ->exactly(1)->whitespace()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("  pdr "));
+
+        $this->assertFalse($regEx->test(" pdr "));
+        $this->assertFalse($regEx->test("  pd r "));
+        $this->assertFalse($regEx->test(" p dr "));
+
+
+
+    }
+
+    public function testMoreWhiteSpace()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->whitespace()
+            ->then("p")
+            ->then("d")
+            ->then("r")
+            ->exactly(1)->whitespace()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("\tpdr\t"));
+    }
+
+
     public function testStartOfLine()
     {
         $regEx = $this->r
