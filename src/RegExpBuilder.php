@@ -174,12 +174,16 @@ class RegExpBuilder
 
     private function _incrementGroupNumbering($literal, $increment)
     {
+        // @codeCoverageIgnoreStart
         if ($increment > 0) {
+            // fixme: how to test this?!
             $literal = preg_replace_callback('/[^\\]\\\d +/', function($groupReference) use($increment){
                 $groupNumber = (integer)substr($groupReference, 2)  + $increment;
                 return (int)substr($groupReference, 0,2) + $groupNumber;
             }, $literal);
+
         }
+        // @codeCoverageIgnoreEnd
 
         return $literal;
     }

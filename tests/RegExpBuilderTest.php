@@ -726,4 +726,15 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($matches[1] == "dart");
     }
 
+    public function testOptional()
+    {
+        $regEx = $this->r
+            ->min(1)->max(3)->of("p")
+            ->exactly(1)->of("dart")
+            ->optional($this->r->getNew()->exactly(1)->from(array("p", "q", "r")))
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("pdartq"));
+    }
+
 }
