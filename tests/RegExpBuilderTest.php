@@ -75,6 +75,32 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($regEx->test("asd425"));
     }
 
+    public function testNotDigit()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->notDigit()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("a234asd"));
+
+        $this->assertFalse($regEx->test("45asd"));
+    }
+
+    public function testNotDigits()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->exactly(1)
+            ->notDigits()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("a234asd"));
+        $this->assertTrue($regEx->test("@234asd"));
+
+        $this->assertFalse($regEx->test("425asd"));
+    }
+
     public function testLowerCaseLetter()
     {
         $regEx = $this->r
