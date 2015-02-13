@@ -184,6 +184,38 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testNeitherNor()
+    {
+
+        $regEx = $this->r
+            ->startOfLine()
+            ->neither($this->r->getNew()->exactly(1)->of("milk"))
+            ->nor($this->r->getNew()->exactly(1)->of("juice"))
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("beer"));
+
+        $this->assertFalse($regEx->test("milk"));
+        $this->assertFalse($regEx->test("juice"));
+
+    }
+
+    public function testNeitherNor2()
+    {
+
+        $regEx = $this->r
+            ->startOfLine()
+            ->neither("milk")
+            ->nor($this->r->getNew()->exactly(1)->of("juice"))
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("beer"));
+
+        $this->assertFalse($regEx->test("milk"));
+        $this->assertFalse($regEx->test("juice"));
+
+    }
+
     public function testLowerCasew()
     {
         $regEx = $this->r
