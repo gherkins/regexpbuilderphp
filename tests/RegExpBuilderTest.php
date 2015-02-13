@@ -191,7 +191,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $regEx = $this->r
             ->startOfLine()
-            ->exactly(3)->from(["p", "q", "r"])
+            ->exactly(3)->from(array("p", "q", "r"))
             ->endOfLine()
             ->getRegExp();
 
@@ -208,7 +208,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $regEx = $this->r
             ->startOfLine()
-            ->exactly(3)->notFrom(["p", "q", "r"])
+            ->exactly(3)->notFrom(array("p", "q", "r"))
             ->endOfLine()
             ->getRegExp();
 
@@ -245,7 +245,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->exactly(2)->of("p")
             ->getRegExp();
 
-        $this->assertTrue($regEx->exec("pprrrrpprrpp")[0] == "pprrrrpp");
+        $matches = $regEx->exec("pprrrrpprrpp");
+        $this->assertTrue($matches[0] == "pprrrrpp");
     }
 
     public function testAhead()
@@ -281,10 +282,11 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $regEx = $this->r
             ->min(1)->max(3)->of("p")
             ->exactly(1)->of("dart")->asGroup()
-            ->exactly(1)->from(["p", "q", "r"])
+            ->exactly(1)->from(array("p", "q", "r"))
             ->getRegExp();
 
-        $this->assertTrue($regEx->exec("pdartq")[1] == "dart");
+        $matches = $regEx->exec("pdartq");
+        $this->assertTrue($matches[1] == "dart");
     }
 
 }
