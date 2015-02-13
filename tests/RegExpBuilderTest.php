@@ -259,7 +259,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($regEx->test("\t45asd"));
     }
 
-    public function testNotWhitespac2e()
+    public function testNotWhitespace2()
     {
         $regEx = $this->r
             ->startOfLine()
@@ -268,6 +268,37 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->getRegExp();
 
         $this->assertTrue($regEx->test("a234asd"));
+
+        $this->assertFalse($regEx->test(" 45asd"));
+        $this->assertFalse($regEx->test("\t45asd"));
+    }
+
+    public function testLineBreak()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->lineBreak()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("\n\ra234asd"));
+        $this->assertTrue($regEx->test("\na234asd"));
+        $this->assertTrue($regEx->test("\ra234asd"));
+
+        $this->assertFalse($regEx->test(" 45asd"));
+        $this->assertFalse($regEx->test("\t45asd"));
+    }
+
+    public function testLineBreaks()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->min(2)
+            ->lineBreaks()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("\n\ra234asd"));
+        $this->assertTrue($regEx->test("\n\na234asd"));
+        $this->assertTrue($regEx->test("\r\ra234asd"));
 
         $this->assertFalse($regEx->test(" 45asd"));
         $this->assertFalse($regEx->test("\t45asd"));
