@@ -631,7 +631,7 @@ class RegExpBuilder
 
     private function _sanitize($s)
     {
-        return preg_replace('#([.*+?^=!:${}()|\[\]/\\\\])#', "\\$1", $s);
+        return preg_quote($s);
     }
 
     /**
