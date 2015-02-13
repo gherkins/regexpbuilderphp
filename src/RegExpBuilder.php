@@ -11,19 +11,74 @@ namespace Gherkins\RegExpBuilderPHP;
 class RegExpBuilder
 {
 
+    /**
+     * @var string
+     */
     protected $_flags      = "";
+
+    /**
+     * @var array
+     */
     protected $_literal    = [];
+
+    /**
+     * @var int
+     */
     protected $_groupsUsed = 0;
+
+    /**
+     * @var int
+     */
     protected $_min;
+
+    /**
+     * @var int
+     */
     protected $_max;
+
+    /**
+     * @var string
+     */
     protected $_of;
+
+    /**
+     * @var string
+     */
     protected $_ofAny;
+
+    /**
+     * @var string
+     */
     protected $_ofGroup;
+
+    /**
+     * @var string
+     */
     protected $_from;
+
+    /**
+     * @var string
+     */
     protected $_notFrom;
+
+    /**
+     * @var string
+     */
     protected $_like;
+
+    /**
+     * @var string
+     */
     protected $_either;
+
+    /**
+     * @var bool
+     */
     protected $_reluctant;
+
+    /**
+     * @var bool
+     */
     protected $_capture;
 
 
@@ -32,6 +87,9 @@ class RegExpBuilder
         $this->_clear();
     }
 
+    /**
+     * reset values
+     */
     private function _clear()
     {
         $this->_min       = -1;
@@ -579,14 +637,14 @@ class RegExpBuilder
         return preg_replace('#([.*+?^=!:${}()|\[\]/\\\\])#', "\\$1", $s);
     }
 
+    /**
+     * get a fresh instance
+     *
+     * @return RegExpBuilder
+     */
     public function another(){
-        $that = clone $this;
-
-        $that->_flags      = "";
-        $that->_literal    = [];
-        $that->_groupsUsed = 0;
-        $that->_clear();
-        return $that;
+        $class = get_class($this);
+        return new $class;
     }
 
 }
