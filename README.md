@@ -40,7 +40,7 @@ $builder1->getRegExp()->test("€ 1.228,99");   //false
 
 //create another builder instance and build second expression            
 $builder2 = $builder
-    ->getNew()                                // <-  getNew() returns a new build instance !
+    ->getNew() // <- create a new builder instance !
     ->find("€")
     ->exactly(1)->whitespace()
     ->min(1)->digits()
@@ -58,7 +58,7 @@ $builder2->getRegExp()->test("€ 81,99");      //false
 
 //create new builder instance and build a third expression by combining both
 $combined = $builder
-    ->getNew()                                // <-  getNew() returns a new build instance !
+    ->getNew() // <- create a new builder instance !
     ->eitherIs($builder1)
     ->orIs($builder2);
     
