@@ -63,12 +63,13 @@ class RegExp
      */
     public function test($string)
     {
-
+        $matches = array();
         return (bool)call_user_func_array(
             $this->_method,
             array(
                 sprintf("/%s/%s", $this->_expr, $this->_flags),
-                $string
+                $string,
+                &$matches
             )
         );
     }
