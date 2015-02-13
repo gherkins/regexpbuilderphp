@@ -184,7 +184,6 @@ class RegExpBuilder
     public function getRegExp()
     {
         $this->_flushState();
-
         return new RegExp(join("", $this->_literal) , $this->_flags);
     }
 

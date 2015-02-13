@@ -33,6 +33,32 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testTab()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->tab()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("\tp"));
+        $this->assertFalse($regEx->test("q\tp\t"));
+        $this->assertFalse($regEx->test("p\t"));
+
+    }
+
+    public function testTab2()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->exactly(1)->of("p")
+            ->tab()
+            ->exactly(1)->of("q")
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("p\tq"));
+    }
+
+
     public function testStartOfLine()
     {
         $regEx = $this->r
