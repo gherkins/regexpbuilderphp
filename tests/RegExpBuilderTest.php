@@ -259,6 +259,20 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($regEx->test("\t45asd"));
     }
 
+    public function testNotWhitespac2e()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->min(1)
+            ->notWhitespace()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("a234asd"));
+
+        $this->assertFalse($regEx->test(" 45asd"));
+        $this->assertFalse($regEx->test("\t45asd"));
+    }
+
 
     public function testStartOfLine()
     {
