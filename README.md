@@ -18,14 +18,15 @@ Usage
 
     $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
 
-    $regEx = $builder
-        ->startOfLine()
-        ->exactly(1)
-        ->of("p")
+     $regEx = $this->r
+        ->find("€")
+        ->min(1)->digits()
+        ->then(",")
+        ->digit()
+        ->digit()
         ->getRegExp();
 
-    $regEx->test("pq");  // true
-    $regEx->test("qp"); // false
+    $regEx->test("€8,99");  // true
         
 Take a look at the [tests](tests/RegExpBuilderTest.php) for more examples
     

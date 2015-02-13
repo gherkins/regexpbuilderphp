@@ -33,6 +33,26 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testMoney()
+    {
+
+
+        $regEx = $this->r
+            ->find("€")
+            ->min(1)->digits()
+            ->then(",")
+            ->digit()
+            ->digit()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("€8,99"));
+        $this->assertTrue($regEx->test("€81,99"));
+
+        $this->assertFalse($regEx->test("€8,9"));
+        $this->assertFalse($regEx->test("8,99 €"));
+
+    }
+
     public function testMaybe()
     {
         $regEx = $this->r
