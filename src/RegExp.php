@@ -5,13 +5,18 @@ namespace Gherkins\RegExpBuilderPHP;
 class RegExp
 {
 
-    public $expr;
-    public $flags;
+    protected $expr;
+    protected $flags;
 
     public function __construct($expr, $flags)
     {
         $this->expr  = $expr;
         $this->flags = $flags;
+    }
+
+    public function __toString()
+    {
+        return $this->expr;
     }
 
     public function test($string)
@@ -33,4 +38,6 @@ class RegExp
 
         return $matches;
     }
+
+
 }

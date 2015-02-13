@@ -11,20 +11,20 @@ namespace Gherkins\RegExpBuilderPHP;
 class RegExpBuilder
 {
 
-    public $_flags      = "";
-    public $_literal    = [];
-    public $_groupsUsed = 0;
-    public $_min;
-    public $_max;
-    public $_of;
-    public $_ofAny;
-    public $_ofGroup;
-    public $_from;
-    public $_notFrom;
-    public $_like;
-    public $_either;
-    public $_reluctant;
-    public $_capture;
+    protected $_flags      = "";
+    protected $_literal    = [];
+    protected $_groupsUsed = 0;
+    protected $_min;
+    protected $_max;
+    protected $_of;
+    protected $_ofAny;
+    protected $_ofGroup;
+    protected $_from;
+    protected $_notFrom;
+    protected $_like;
+    protected $_either;
+    protected $_reluctant;
+    protected $_capture;
 
 
     public function __construct()
@@ -32,7 +32,7 @@ class RegExpBuilder
         $this->_clear();
     }
 
-    public function _clear()
+    private function _clear()
     {
         $this->_min       = -1;
         $this->_max       = -1;
@@ -47,7 +47,7 @@ class RegExpBuilder
         $this->_capture   = false;
     }
 
-    public function _flushState()
+    private function _flushState()
     {
         if ($this->_of != "" || $this->_ofAny || $this->_ofGroup > 0 || $this->_from != "" || $this->_notFrom != "" || $this->_like != "") {
             $captureLiteral   = $this->_capture ? "" : "?:";
@@ -59,7 +59,7 @@ class RegExpBuilder
         }
     }
 
-    public function _getQuantityLiteral()
+    private function _getQuantityLiteral()
     {
         if ($this->_min != -1) {
             if ($this->_max != -1) {
@@ -72,7 +72,7 @@ class RegExpBuilder
         return "{0," . $this->_max . "}";
     }
 
-    public function _getCharacterLiteral()
+    private function _getCharacterLiteral()
     {
         if ($this->_of != "") {
             return $this->_of;
@@ -103,7 +103,7 @@ class RegExpBuilder
         return join("", $this->_literal);
     }
 
-    public function _combineGroupNumberingAndGetLiteral(RegExpBuilder $r)
+    private function _combineGroupNumberingAndGetLiteral(RegExpBuilder $r)
     {
         $literal = $this->_incrementGroupNumbering($r->getLiteral(), $this->_groupsUsed);
         $this->_groupsUsed .= $r->_groupsUsed;
@@ -111,7 +111,7 @@ class RegExpBuilder
         return $literal;
     }
 
-    public function _incrementGroupNumbering($literal, $increment)
+    private function _incrementGroupNumbering($literal, $increment)
     {
         if ($increment > 0) {
             $literal = preg_replace_callback('/[^\\]\\\d +/', function($groupReference) use($increment){
@@ -130,7 +130,7 @@ class RegExpBuilder
         return new RegExp(join("", $this->_literal) , $this->_flags);
     }
 
-    public function _addFlag($flag)
+    private function _addFlag($flag)
     {
         if (strpos($this->_flags, $flag) === false) {
             $this->_flags .= $flag;
@@ -197,7 +197,7 @@ class RegExpBuilder
     }
 
 
-    public function _eitherLike($r)
+    private function _eitherLike($r)
     {
         $this->_flushState();
         $this->_either = $this->_combineGroupNumberingAndGetLiteral($r);
@@ -217,7 +217,7 @@ class RegExpBuilder
         return $this->_orLike($r);
     }
 
-    public function _orLike($r)
+    private function _orLike($r)
     {
         $either = $this->_either;
         $or     = $this->_combineGroupNumberingAndGetLiteral($r);
@@ -574,7 +574,7 @@ class RegExpBuilder
         return $this;
     }
 
-    public function _sanitize($s)
+    private function _sanitize($s)
     {
         return preg_replace('#([.*+?^=!:${}()|\[\]/\\\\])#', "\\$1", $s);
     }
