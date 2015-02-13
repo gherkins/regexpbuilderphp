@@ -36,7 +36,6 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     public function testMoney()
     {
 
-
         $regEx = $this->r
             ->find("€")
             ->min(1)->digits()
@@ -45,11 +44,68 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->digit()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("€8,99"));
+        $this->assertTrue($regEx->test("€128,99"));
         $this->assertTrue($regEx->test("€81,99"));
 
         $this->assertFalse($regEx->test("€8,9"));
-        $this->assertFalse($regEx->test("8,99 €"));
+        $this->assertFalse($regEx->test("12.123.8,99 €"));
+
+    }
+
+    public function testMoney2()
+    {
+
+        $regEx = $this->r
+            ->find("€")
+            ->min(1)->digits()
+            ->then(".")
+            ->exactly(3)->digits()
+            ->then(",")
+            ->digit()
+            ->digit()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("€1.228,99"));
+        $this->assertTrue($regEx->test("€452.000,99"));
+
+        $this->assertFalse($regEx->test("€8,9"));
+        $this->assertFalse($regEx->test("12.123.8,99 €"));
+
+    }
+
+    public function testAllMoney()
+    {
+        $builder1 = $this->r
+            ->find("€")
+            ->min(1)->digits()
+            ->then(",")
+            ->digit()
+            ->digit();
+
+        $this->assertTrue($builder1->getRegExp()->test("€128,99"));
+        $this->assertTrue($builder1->getRegExp()->test("€81,99"));
+
+        $builder2 = $this->r->getNew()
+            ->find("€")
+            ->min(1)->digits()
+            ->then(".")
+            ->exactly(3)->digits()
+            ->then(",")
+            ->digit()
+            ->digit();
+
+        $this->assertTrue($builder2->getRegExp()->test("€1.228,99"));
+        $this->assertTrue($builder2->getRegExp()->test("€452.000,99"));
+
+        $combined = $this->r->getNew()
+            ->either($builder1)
+            ->orLike($builder2);
+
+        $this->assertTrue($combined->getRegExp()->test("€128,99"));
+        $this->assertTrue($combined->getRegExp()->test("€81,99"));
+        $this->assertTrue($combined->getRegExp()->test("€1.228,99"));
+        $this->assertTrue($combined->getRegExp()->test("€452.000,99"));
+
 
     }
 

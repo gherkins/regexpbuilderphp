@@ -18,15 +18,41 @@ Usage
 
     $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
 
-     $regEx = $this->r
+
+    $builder1 = $builder
         ->find("€")
         ->min(1)->digits()
         ->then(",")
         ->digit()
+        ->digit();
+        
+    $builder1->getRegExp()->test("€128,99");     //true
+    $builder1->getRegExp()->test("€81,99");      //true
+        
+       
+                     
+    $builder2 = $builder->getNew()
+        ->find("€")
+        ->min(1)->digits()
+        ->then(".")
+        ->exactly(3)->digits()
+        ->then(",")
         ->digit()
-        ->getRegExp();
-
-    $regEx->test("€8,99");  // true
+        ->digit();
+        
+    $builder2->getRegExp()->test("€1.228,99");   //true
+    $builder2->getRegExp()->test("€452.000,99"); //true
+        
+        
+       
+    $combined = $this->r->getNew()
+        ->either($builder1)
+        ->orLike($builder2);
+        
+    $combined->getRegExp()->test("€128,99");     //true
+    $combined->getRegExp()->test("€81,99");      //true
+    $combined->getRegExp()->test("€1.228,99");   //true
+    $combined->getRegExp()->test("€452.000,99"); //true
         
 Take a look at the [tests](tests/RegExpBuilderTest.php) for more examples
     
