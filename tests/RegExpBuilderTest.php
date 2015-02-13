@@ -33,6 +33,46 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testMaybe()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->notDigit()
+            ->maybe("a")
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("aabba1"));
+
+        $this->assertFalse($regEx->test("12aabba1"));
+
+    }
+
+    public function testMaybeSome()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->notDigit()
+            ->maybeSome(array("a", "b", "c"))
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("aabba1"));
+
+        $this->assertFalse($regEx->test("12aabba1"));
+    }
+
+    public function testSome()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->notDigit()
+            ->some(array("a", "b", "c"))
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("aabba1"));
+
+        $this->assertFalse($regEx->test("12aabba1"));
+    }
+
     public function testLettersDigits()
     {
         $regEx = $this->r
@@ -121,7 +161,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->startOfLine()
             ->exactly(2)
             ->ofAny()
-            ->then("_")
+            ->find("_")
             ->getRegExp();
 
         $this->assertTrue($regEx->test("12_123123.jpg"));
@@ -206,6 +246,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $regEx = $this->r
             ->startOfLine()
             ->neither("milk")
+            ->min(0)
+            ->ofAny()
             ->nor($this->r->getNew()->exactly(1)->of("juice"))
             ->getRegExp();
 
