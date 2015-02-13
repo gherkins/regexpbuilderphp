@@ -19,11 +19,9 @@ Usage
 ----
 
 ```php
-//create a builder instance
 $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
 
 
-//build first expression
 $builder1 = $builder
     ->find("€")
     ->exactly(1)->whitespace()
@@ -37,8 +35,8 @@ $builder1->getRegExp()->test("€ 81,99");      //true
 
 $builder1->getRegExp()->test("€ 1.228,99");   //false
     
-
-//create another builder instance and build second expression            
+   
+                 
 $builder2 = $builder
     ->getNew() // <- create a new builder instance !
     ->find("€")
@@ -55,8 +53,8 @@ $builder2->getRegExp()->test("€ 452.000,99"); //true
     
 $builder2->getRegExp()->test("€ 81,99");      //false
 
-
-//create new builder instance and build a third expression by combining both
+    
+   
 $combined = $builder
     ->getNew() // <- create a new builder instance !
     ->eitherIs($builder1)
