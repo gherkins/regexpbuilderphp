@@ -61,6 +61,76 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($regEx->test("asd425"));
     }
 
+    public function testNotLetters()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->exactly(1)
+            ->notLetters()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("234asd"));
+        $this->assertTrue($regEx->test("@234asd"));
+
+        $this->assertFalse($regEx->test("asd425"));
+    }
+
+    public function testLowerCaseLetter()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->lowerCaseLetter()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("a24"));
+
+        $this->assertFalse($regEx->test("234a"));
+        $this->assertFalse($regEx->test("A34"));
+    }
+
+    public function testLowerCaseLetters()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->exactly(2)
+            ->lowerCaseLetters()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("aa24"));
+
+        $this->assertFalse($regEx->test("aAa234a"));
+        $this->assertFalse($regEx->test("234a"));
+        $this->assertFalse($regEx->test("A34"));
+    }
+
+    public function testUpperCaseLetter()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->upperCaseLetter()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("A24"));
+
+        $this->assertFalse($regEx->test("aa234a"));
+        $this->assertFalse($regEx->test("34aa"));
+    }
+
+    public function testUpperCaseLetters()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->exactly(2)
+            ->upperCaseLetters()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("AA24"));
+
+        $this->assertFalse($regEx->test("aAa234a"));
+        $this->assertFalse($regEx->test("234a"));
+        $this->assertFalse($regEx->test("a34"));
+    }
+
     public function testLetterDigit()
     {
         $regEx = $this->r
@@ -98,6 +168,22 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->getRegExp();
 
         $this->assertTrue($regEx->test("p\tq"));
+    }
+
+    public function testTabs()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->exactly(2)
+            ->tabs()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("\t\tp"));
+
+        $this->assertFalse($regEx->test("\tp"));
+        $this->assertFalse($regEx->test("q\tp\t"));
+        $this->assertFalse($regEx->test("p\t"));
+
     }
 
 
