@@ -116,7 +116,7 @@ class RegExpBuilder
         if ($increment > 0) {
             $literal = preg_replace_callback('/[^\\]\\\d +/', function($groupReference) use($increment){
                 $groupNumber = (integer)substr($groupReference, 2)  + $increment;
-                return substr($groupReference, 0,2) + $groupNumber;
+                return (int)substr($groupReference, 0,2) + $groupNumber;
             }, $literal);
         }
 
