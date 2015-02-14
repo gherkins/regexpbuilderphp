@@ -84,13 +84,13 @@ class RegExpBuilder
 
     public function __construct()
     {
-        $this->_clear();
+        $this->clear();
     }
 
     /**
      * reset values
      */
-    private function _clear()
+    private function clear()
     {
         $this->_min       = -1;
         $this->_max       = -1;
@@ -105,19 +105,19 @@ class RegExpBuilder
         $this->_capture   = false;
     }
 
-    private function _flushState()
+    private function flushState()
     {
         if ($this->_of != "" || $this->_ofAny || $this->_ofGroup > 0 || $this->_from != "" || $this->_notFrom != "" || $this->_like != "") {
             $captureLiteral   = $this->_capture ? "" : "?:";
-            $quantityLiteral  = $this->_getQuantityLiteral();
-            $characterLiteral = $this->_getCharacterLiteral();
+            $quantityLiteral  = $this->getQuantityLiteral();
+            $characterLiteral = $this->getCharacterLiteral();
             $reluctantLiteral = $this->_reluctant ? "?" : "";
             $this->_literal[] = ("(" . $captureLiteral . "(?:" . $characterLiteral . ")" . $quantityLiteral . $reluctantLiteral . ")");
-            $this->_clear();
+            $this->clear();
         }
     }
 
-    private function _getQuantityLiteral()
+    private function getQuantityLiteral()
     {
         if ($this->_min != -1) {
             if ($this->_max != -1) {
@@ -130,7 +130,7 @@ class RegExpBuilder
         return "{0," . $this->_max . "}";
     }
 
-    private function _getCharacterLiteral()
+    private function getCharacterLiteral()
     {
         if ($this->_of != "") {
             return $this->_of;
@@ -159,28 +159,32 @@ class RegExpBuilder
 
     public function getLiteral()
     {
-        $this->_flushState();
+        $this->flushState();
 
         return join("", $this->_literal);
     }
 
-    private function _combineGroupNumberingAndGetLiteral(RegExpBuilder $r)
+    private function combineGroupNumberingAndGetLiteralral(RegExpBuilder $r)
     {
-        $literal = $this->_incrementGroupNumbering($r->getLiteral(), $this->_groupsUsed);
+        $literal = $this->incrementGroupNumbering($r->getLiteral(), $this->_groupsUsed);
         $this->_groupsUsed .= $r->_groupsUsed;
 
         return $literal;
     }
 
-    private function _incrementGroupNumbering($literal, $increment)
+    private function incrementGroupNumbering($literal, $increment)
     {
         // @codeCoverageIgnoreStart
         if ($increment > 0) {
-            // fixme: how to test this?!
-            $literal = preg_replace_callback('/[^\\]\\\d +/', function($groupReference) use($increment){
-                $groupNumber = (integer)substr($groupReference, 2)  + $increment;
-                return (int)substr($groupReference, 0,2) + $groupNumber;
-            }, $literal);
+            $literal = preg_replace_callback(
+                '/[^\\]\\\d +/',
+                function ($groupReference) use ($increment) {
+                    $groupNumber = (integer)substr($groupReference, 2) + $increment;
+
+                    return (int)substr($groupReference, 0, 2) + $groupNumber;
+                },
+                $literal
+            );
 
         }
         // @codeCoverageIgnoreEnd
@@ -190,11 +194,11 @@ class RegExpBuilder
 
     public function getRegExp()
     {
-        $this->_flushState();
+        $this->flushState();
         return new RegExp(join("", $this->_literal) , $this->_flags);
     }
 
-    private function _addFlag($flag)
+        private function addFlag($flag)
     {
         if (strpos($this->_flags, $flag) === false) {
             $this->_flags .= $flag;
@@ -206,18 +210,18 @@ class RegExpBuilder
 
     public function ignoreCase()
     {
-        return $this->_addFlag("i");
+        return $this->addFlag("i");
     }
 
 
     public function multiLine()
     {
-        return $this->_addFlag("m");
+        return $this->addFlag("m");
     }
 
     public function globalMatch()
     {
-        return $this->_addFlag("g");
+        return $this->addFlag("g");
     }
 
     public function startOfInput()
@@ -236,7 +240,7 @@ class RegExpBuilder
 
     public function endOfInput()
     {
-        $this->_flushState();
+        $this->flushState();
         $this->_literal[] = "(?:$)";
 
         return $this;
@@ -252,17 +256,17 @@ class RegExpBuilder
     public function eitherIs($r)
     {
         if (is_string($r)) {
-            return $this->_eitherIs($this->getNew()->exactly(1)->of($r));
+            return $this->setEither($this->getNew()->exactly(1)->of($r));
         }
 
-        return $this->_eitherIs($r);
+        return $this->setEither($r);
     }
 
 
-    private function _eitherIs($r)
+    private function setEither($r)
     {
-        $this->_flushState();
-        $this->_either = $this->_combineGroupNumberingAndGetLiteral($r);
+        $this->flushState();
+        $this->_either = $this->combineGroupNumberingAndGetLiteralral($r);
 
         return $this;
     }
@@ -271,16 +275,16 @@ class RegExpBuilder
     {
 
         if (is_string($r)) {
-            return $this->_orIs($this->getNew()->exactly(1)->of($r));
+            return $this->setOr($this->getNew()->exactly(1)->of($r));
         }
 
-        return $this->_orIs($r);
+        return $this->setOr($r);
     }
 
-    private function _orIs($r)
+    private function setOr($r)
     {
         $either = $this->_either;
-        $or     = $this->_combineGroupNumberingAndGetLiteral($r);
+        $or     = $this->combineGroupNumberingAndGetLiteralral($r);
         if ($either == "") {
             $lastOr = $this->_literal[count($this->_literal) - 1];
 
@@ -290,7 +294,7 @@ class RegExpBuilder
         } else {
             $this->_literal[] = "(?:(?:" . $either . ")|(?:" . $or . "))";
         }
-        $this->_clear();
+        $this->clear();
 
         return $this;
     }
@@ -319,7 +323,7 @@ class RegExpBuilder
 
     public function exactly($n)
     {
-        $this->_flushState();
+        $this->flushState();
         $this->_min = $n;
         $this->_max = $n;
 
@@ -328,7 +332,7 @@ class RegExpBuilder
 
     public function min($n)
     {
-        $this->_flushState();
+        $this->flushState();
         $this->_min = $n;
 
         return $this;
@@ -336,7 +340,7 @@ class RegExpBuilder
 
     public function max($n)
     {
-        $this->_flushState();
+        $this->flushState();
         $this->_max = $n;
 
         return $this;
@@ -344,7 +348,7 @@ class RegExpBuilder
 
     public function of($s)
     {
-        $this->_of = $this->_sanitize($s);
+        $this->_of = $this->sanitize($s);
 
         return $this;
     }
@@ -366,21 +370,21 @@ class RegExpBuilder
 
     public function from($s)
     {
-        $this->_from = $this->_sanitize(join("", $s));
+        $this->_from = $this->sanitize(join("", $s));
 
         return $this;
     }
 
     public function notFrom($s)
     {
-        $this->_notFrom = $this->_sanitize(join("", $s));
+        $this->_notFrom = $this->sanitize(join("", $s));
 
         return $this;
     }
 
     public function like($r)
     {
-        $this->_like = $this->_combineGroupNumberingAndGetLiteral($r);
+        $this->_like = $this->combineGroupNumberingAndGetLiteralral($r);
 
         return $this;
     }
@@ -397,8 +401,8 @@ class RegExpBuilder
 
     public function ahead($r)
     {
-        $this->_flushState();
-        $this->_literal[] = "(?=" . $this->_combineGroupNumberingAndGetLiteral($r) . ")";
+        $this->flushState();
+        $this->_literal[] = "(?=" . $this->combineGroupNumberingAndGetLiteralral($r) . ")";
 
         return $this;
     }
@@ -406,8 +410,8 @@ class RegExpBuilder
 
     public function notAhead($r)
     {
-        $this->_flushState();
-        $this->_literal[] = "(?!" . $this->_combineGroupNumberingAndGetLiteral($r) . ")";
+        $this->flushState();
+        $this->_literal[] = "(?!" . $this->combineGroupNumberingAndGetLiteralral($r) . ")";
 
         return $this;
     }
@@ -474,7 +478,7 @@ class RegExpBuilder
 
     public function lineBreak()
     {
-        $this->_flushState();
+        $this->flushState();
         $this->_literal[] = "(?:\\r\\n|\\r|\\n)";
 
         return $this;
@@ -489,7 +493,7 @@ class RegExpBuilder
     public function whitespace()
     {
         if ($this->_min == -1 && $this->_max == -1) {
-            $this->_flushState();
+            $this->flushState();
             $this->_literal[] = "(?:\\s)";
 
             return $this;
@@ -502,7 +506,7 @@ class RegExpBuilder
     public function notWhitespace()
     {
         if ($this->_min == -1 && $this->_max == -1) {
-            $this->_flushState();
+            $this->flushState();
             $this->_literal[] = "(?:\\S)";
 
             return $this;
@@ -514,7 +518,7 @@ class RegExpBuilder
 
     public function tab()
     {
-        $this->_flushState();
+        $this->flushState();
         $this->_literal[] = "(?:\\t)";
 
         return $this;
@@ -527,7 +531,7 @@ class RegExpBuilder
 
     public function digit()
     {
-        $this->_flushState();
+        $this->flushState();
         $this->_literal[] = "(?:\\d)";
 
         return $this;
@@ -536,7 +540,7 @@ class RegExpBuilder
 
     public function notDigit()
     {
-        $this->_flushState();
+        $this->flushState();
         $this->_literal[] = "(?:\\D)";
 
         return $this;
@@ -616,7 +620,7 @@ class RegExpBuilder
     public function append($r)
     {
         $this->exactly(1);
-        $this->_like = $this->_combineGroupNumberingAndGetLiteral($r);
+        $this->_like = $this->combineGroupNumberingAndGetLiteralral($r);
 
         return $this;
     }
@@ -624,12 +628,12 @@ class RegExpBuilder
     public function optional($r)
     {
         $this->max(1);
-        $this->_like = $this->_combineGroupNumberingAndGetLiteral($r);
+        $this->_like = $this->combineGroupNumberingAndGetLiteralral($r);
 
         return $this;
     }
 
-    private function _sanitize($s)
+    private function sanitize($s)
     {
         return preg_quote($s);
     }
@@ -639,9 +643,12 @@ class RegExpBuilder
      *
      * @return RegExpBuilder
      */
-    public function getNew(){
+    public function getNew()
+    {
         $class = get_class($this);
+
         return new $class;
     }
 
 }
+
