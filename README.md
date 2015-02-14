@@ -1,5 +1,15 @@
-# regexpbuilderphp
+```asciidoc
+______           _____          ______       _ _     _          ______ _   _______ 
+| ___ \         |  ___|         | ___ \     (_| |   | |         | ___ | | | | ___ \
+| |_/ /___  __ _| |____  ___ __ | |_/ /_   _ _| | __| | ___ _ __| |_/ | |_| | |_/ /
+|    // _ \/ _` |  __\ \/ | '_ \| ___ | | | | | |/ _` |/ _ | '__|  __/|  _  |  __/ 
+| |\ |  __| (_| | |___>  <| |_) | |_/ | |_| | | | (_| |  __| |  | |   | | | | |    
+\_| \_\___|\__, \____/_/\_| .__/\____/ \__,_|_|_|\__,_|\___|_|  \_|   \_| |_\_|    
+            __/ |         | |                                                      
+           |___/          |_|                                   
+```
 
+# PHP Regular Expression Builder
 
 [![Build Status](https://api.travis-ci.org/gherkins/regexpbuilderphp.svg)](https://travis-ci.org/gherkins/regexpbuilderphp)
 [![Coverage Status](https://coveralls.io/repos/gherkins/regexpbuilderphp/badge.svg?branch=master)](https://coveralls.io/r/gherkins/regexpbuilderphp?branch=master)
