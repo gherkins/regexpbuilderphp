@@ -95,5 +95,4 @@ class RegExp
         return $matches;
     }
 
-
 }
