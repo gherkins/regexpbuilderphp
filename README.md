@@ -15,6 +15,19 @@ PHP port of https://github.com/thebinarysearchtree/regexpbuilderjs
 
 > RegExpBuilder integrates regular expressions into the programming language, thereby making them easy to read and maintain. Regular Expressions are created by using chained methods and variables such as arrays or strings.
 
+# Installation
+
+With [composer](https://getcomposer.org):
+```json
+"gherkins/regexpbuilderphp": "dev-master"
+```
+... or download https://github.com/gherkins/regexpbuilderphp/archive/master.zip
+and require both RegExpBuilder.php and RegExp.php manually from the src Folder.
+```php
+require_once("src/RegExpBuilder.php");
+require_once("src/RegExp.php");
+```
+
 
 Documentation
 ---
