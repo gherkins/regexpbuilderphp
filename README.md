@@ -15,22 +15,21 @@ PHP port of https://github.com/thebinarysearchtree/regexpbuilderjs
 
 > RegExpBuilder integrates regular expressions into the programming language, thereby making them easy to read and maintain. Regular Expressions are created by using chained methods and variables such as arrays or strings.
 
-Installation
-----
+## Installation
 
-```text
+```bash
 composer require gherkins/regexpbuilderphp:dev-master
 ```
+... or download https://github.com/gherkins/regexpbuilderphp/archive/master.zip
+and require both RegExpBuilder.php and RegExp.php manually from the src Folder.
 
 
-Documentation
----
+## Documentation
 
 https://github.com/gherkins/regexpbuilderphp/wiki
 
 
-Usage example
-----
+## Usage example
 
 ```php
 $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
@@ -63,4 +62,3 @@ $regExp->test("2023001_cats.jpeg");
 ```
         
 Take a look at the [tests](tests/RegExpBuilderTest.php) for more examples
-    
