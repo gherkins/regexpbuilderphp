@@ -253,7 +253,7 @@ class RegExpBuilder
         return $this->endOfInput();
     }
 
-    public function eitherIs($r)
+    public function eitherFind($r)
     {
         if (is_string($r)) {
             return $this->setEither($this->getNew()->exactly(1)->of($r));
@@ -271,7 +271,7 @@ class RegExpBuilder
         return $this;
     }
 
-    public function orIs($r)
+    public function orFind($r)
     {
 
         if (is_string($r)) {
