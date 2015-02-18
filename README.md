@@ -22,10 +22,6 @@ composer require gherkins/regexpbuilderphp:dev-master
 ```
 ... or download https://github.com/gherkins/regexpbuilderphp/archive/master.zip
 and require both RegExpBuilder.php and RegExp.php manually from the src Folder.
-```php
-require_once("src/RegExpBuilder.php");
-require_once("src/RegExp.php");
-```
 
 
 ## Documentation
