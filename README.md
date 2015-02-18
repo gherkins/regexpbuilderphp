@@ -19,9 +19,8 @@ Installation
 ----
 
 With [composer](https://getcomposer.org):
-```php
-composer require gherkins/regexpbuilderphp:dev-master
-require_once(vendor/autoload.php);
+```json
+"gherkins/regexpbuilderphp": "dev-master"
 ```
 
 
