@@ -18,9 +18,23 @@ PHP port of https://github.com/thebinarysearchtree/regexpbuilderjs
 Installation
 ----
 
-```text
+with [composer](https://getcomposer.org):
+```bash
 composer require gherkins/regexpbuilderphp:dev-master
 ```
+```php
+require_once(vendor/autoload.php);
+```
+
+
+... or download https://github.com/gherkins/regexpbuilderphp/archive/master.zip
+and require both RegExpBuilder.php and RegExp.php manually from the src Folder.
+```php
+require_once("src/RegExpBuilder.php");
+require_once("src/RegExp.php");
+```
+
+
 
 
 Documentation
@@ -82,4 +96,3 @@ $combined->getRegExp()->test("€ 452.000,99"); //true
 ```
         
 Take a look at the [tests](tests/RegExpBuilderTest.php) for more examples
-    
