@@ -78,7 +78,7 @@ $combined->getRegExp()->test("€ 452.000,99"); //true
 Take a look at the [tests](tests/RegExpBuilderTest.php) for more examples
     
 
-API documentation
+Documentation
 ---
 
-https://github.com/thebinarysearchtree/regexpbuilderjs/wiki
+https://github.com/gherkins/regexpbuilderphp/wiki
