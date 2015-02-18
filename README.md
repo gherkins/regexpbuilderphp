@@ -29,7 +29,7 @@ Documentation
 https://github.com/gherkins/regexpbuilderphp/wiki
 
 
-Usage
+Usage example
 ----
 
 ```php
