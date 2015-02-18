@@ -29,7 +29,7 @@ and require both RegExpBuilder.php and RegExp.php manually from the src Folder.
 https://github.com/gherkins/regexpbuilderphp/wiki
 
 
-## Usage example
+## Usage examples
 
 ```php
 $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
@@ -58,7 +58,41 @@ $regExp->test("2015_05_thisnameistoolong.jpg");
 $regExp->test("2015_05_doge.jpeg");
 $regExp->test("202301_cat.png");
 $regExp->test("2023001_cats.jpeg");
+```
 
+```php
+ $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
+
+$a = $builder
+    ->startOfInput()
+    ->exactly(3)->digits()
+    ->eitherFind(".pdf")->orFind(".doc")
+    ->endOfInput();
+
+$b = $builder
+    ->getNew()
+    ->startOfInput()
+    ->exactly(4)->letters()
+    ->then(".jpg")
+    ->endOfInput();
+
+$regExp = $builder
+    ->getNew()
+    ->eitherFind($a)
+    ->orFind($b)
+    ->getRegExp();
+
+//true
+$regExp->test("123.pdf");
+$regExp->test("456.doc");
+$regExp->test("bbbb.jpg");
+$regExp->test("aaaa.jpg");
+
+//false
+$regExp->test("1234.pdf");
+$regExp->test("123.gif");
+$regExp->test("aaaaa.jpg");
+$regExp->test("456.docx");
 ```
         
 Take a look at the [tests](tests/RegExpBuilderTest.php) for more examples

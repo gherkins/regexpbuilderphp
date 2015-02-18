@@ -63,6 +63,41 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testUsageExample2()
+    {
+        $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
+
+        $a = $builder
+            ->startOfInput()
+            ->exactly(3)->digits()
+            ->eitherFind(".pdf")->orFind(".doc")
+            ->endOfInput();
+
+        $b = $builder
+            ->getNew()
+            ->startOfInput()
+            ->exactly(4)->letters()
+            ->then(".jpg")
+            ->endOfInput();
+
+        $regExp = $builder
+            ->getNew()
+            ->eitherFind($a)
+            ->orFind($b)
+            ->getRegExp();
+
+        $this->assertTrue($regExp->test("123.pdf"));
+        $this->assertTrue($regExp->test("456.doc"));
+        $this->assertTrue($regExp->test("bbbb.jpg"));
+        $this->assertTrue($regExp->test("aaaa.jpg"));
+
+        $this->assertFalse($regExp->test("1234.pdf"));
+        $this->assertFalse($regExp->test("123.gif"));
+        $this->assertFalse($regExp->test("aaaaa.jpg"));
+        $this->assertFalse($regExp->test("456.docx"));
+
+    }
+
 
     public function testMoney()
     {
