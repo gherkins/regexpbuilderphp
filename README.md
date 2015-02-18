@@ -61,7 +61,7 @@ $regExp->test("2023001_cats.jpeg");
 ```
 
 ```php
- $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
+$builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
 
 $a = $builder
     ->startOfInput()
