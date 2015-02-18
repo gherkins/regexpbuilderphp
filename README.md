@@ -23,6 +23,12 @@ composer require gherkins/regexpbuilderphp:dev-master
 ```
 
 
+Documentation
+---
+
+https://github.com/gherkins/regexpbuilderphp/wiki
+
+
 Usage
 ----
 
@@ -77,8 +83,3 @@ $combined->getRegExp()->test("€ 452.000,99"); //true
         
 Take a look at the [tests](tests/RegExpBuilderTest.php) for more examples
     
-
-Documentation
----
-
-https://github.com/gherkins/regexpbuilderphp/wiki
