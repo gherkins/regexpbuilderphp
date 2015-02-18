@@ -37,46 +37,30 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
 
-
-        $builder1 = $builder
-            ->find("€")
-            ->exactly(1)->whitespace()
-            ->min(1)->digits()
-            ->then(",")
-            ->digit()
-            ->digit();
-
-        $this->assertTrue($builder1->getRegExp()->test("€ 128,99"));     //true
-        $this->assertTrue($builder1->getRegExp()->test("€ 81,99"));      //true
-
-        $this->assertFalse($builder1->getRegExp()->test("€ 1.228,99"));   //true
-        $this->assertFalse($builder1->getRegExp()->test("€ 452.000,99")); //true
-
-        $builder2 = $builder->getNew()
-            ->find("€")
-            ->exactly(1)->whitespace()
-            ->min(1)->digits()
+        $regExp = $builder
+            ->startOfInput()
+            ->exactly(4)->digits()
+            ->then("_")
+            ->exactly(2)->digits()
+            ->then("_")
+            ->min(3)->max(10)->letters()
             ->then(".")
-            ->exactly(3)->digits()
-            ->then(",")
-            ->digit()
-            ->digit();
+            ->eitherFind("png")->orFind("jpg")->orFind("gif")
+            ->endOfInput()
+            ->getRegExp();
 
-        $this->assertTrue($builder2->getRegExp()->test("€ 1.228,99"));   //true
-        $this->assertTrue($builder2->getRegExp()->test("€ 452.000,99")); //true
+        $this->assertTrue($regExp->test("2020_10_doge.jpg"));
+        $this->assertTrue($regExp->test("2030_11_cat.png"));
+        $this->assertTrue($regExp->test("4000_99_frog.gif"));
 
-        $this->assertFalse($builder2->getRegExp()->test("€ 128,99"));     //true
-        $this->assertFalse($builder2->getRegExp()->test("€ 81,99"));      //true
+        $this->assertFalse($regExp->test("4000_99_f.gif"));
+        $this->assertFalse($regExp->test("4000_09_frogt.pdf"));
+        $this->assertFalse($regExp->test("2015_05_thisnameistoolong.jpg"));
+        $this->assertFalse($regExp->test("2015_05_doge.jpeg"));
+        $this->assertFalse($regExp->test("202301_cat.png"));
+        $this->assertFalse($regExp->test("2023_001_cats.jpg"));
+        $this->assertFalse($regExp->test("2023001_cats.jpeg"));
 
-
-        $combined = $this->r->getNew()
-            ->eitherIs($builder1)
-            ->orIs($builder2);
-
-        $this->assertTrue($combined->getRegExp()->test("€ 128,99"));     //true
-        $this->assertTrue($combined->getRegExp()->test("€ 81,99"));      //true
-        $this->assertTrue($combined->getRegExp()->test("€ 1.228,99"));   //true
-        $this->assertTrue($combined->getRegExp()->test("€ 452.000,99")); //true
     }
 
 
@@ -145,8 +129,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($builder2->getRegExp()->test("€452.000,99"));
 
         $combined = $this->r->getNew()
-            ->eitherIs($builder1)
-            ->orIs($builder2);
+            ->eitherFind($builder1)
+            ->orFind($builder2);
 
         $this->assertTrue($combined->getRegExp()->test("€128,99"));
         $this->assertTrue($combined->getRegExp()->test("€81,99"));
@@ -615,8 +599,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     {
         $regEx = $this->r
             ->startOfLine()
-            ->eitherIs($this->r->getNew()->exactly(1)->of("p"))
-            ->orIs($this->r->getNew()->exactly(2)->of("q"))
+            ->eitherFind($this->r->getNew()->exactly(1)->of("p"))
+            ->orFind($this->r->getNew()->exactly(2)->of("q"))
             ->endOfLine()
             ->getRegExp();
 
@@ -632,9 +616,9 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     {
 
         $regEx = $this->r
-            ->eitherIs($this->r->getNew()->exactly(1)->of("p"))
-            ->orIs($this->r->getNew()->exactly(1)->of("q"))
-            ->orIs($this->r->getNew()->exactly(1)->of("r"))
+            ->eitherFind($this->r->getNew()->exactly(1)->of("p"))
+            ->orFind($this->r->getNew()->exactly(1)->of("q"))
+            ->orFind($this->r->getNew()->exactly(1)->of("r"))
             ->getRegExp();
 
         $this->assertTrue($regEx->test("p"));
@@ -647,8 +631,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
     public function testEitherOr()
     {
         $regEx = $this->r
-            ->eitherIs("p")
-            ->orIs("q")
+            ->eitherFind("p")
+            ->orFind("q")
             ->getRegExp();
 
         $this->assertTrue($regEx->test("p"));

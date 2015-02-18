@@ -35,50 +35,31 @@ Usage example
 ```php
 $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
 
-
-$builder1 = $builder
-    ->find("€")
-    ->exactly(1)->whitespace()
-    ->min(1)->digits()
-    ->then(",")
-    ->digit()
-    ->digit();
-    
-$builder1->getRegExp()->test("€ 128,99");     //true
-$builder1->getRegExp()->test("€ 81,99");      //true
-
-$builder1->getRegExp()->test("€ 1.228,99");   //false
-    
-   
-                 
-$builder2 = $builder
-    ->getNew() // <- create a new builder instance !
-    ->find("€")
-    ->exactly(1)->whitespace()
-    ->min(1)->digits()
+$regExp = $builder
+    ->startOfInput()
+    ->exactly(4)->digits()
+    ->then("_")
+    ->exactly(2)->digits()
+    ->then("_")
+    ->min(3)->max(10)->letters()
     ->then(".")
-    ->exactly(3)->digits()
-    ->then(",")
-    ->digit()
-    ->digit();
-    
-$builder2->getRegExp()->test("€ 1.228,99");   //true
-$builder2->getRegExp()->test("€ 452.000,99"); //true
-    
-$builder2->getRegExp()->test("€ 81,99");      //false
+    ->eitherFind("png")->orFind("jpg")->orFind("gif")
+    ->endOfInput()
+    ->getRegExp();
 
-    
-   
-$combined = $builder
-    ->getNew() // <- create a new builder instance !
-    ->eitherIs($builder1)
-    ->orIs($builder2);
-    
-$combined->getRegExp()->test("€ 128,99");     //true
-$combined->getRegExp()->test("€ 81,99");      //true
+//true
+$regExp->test("2020_10_doge.jpg");
+$regExp->test("2030_11_octocat.png");
+$regExp->test("4000_99_cats.gif");
 
-$combined->getRegExp()->test("€ 1.228,99");   //true
-$combined->getRegExp()->test("€ 452.000,99"); //true
+//false
+$regExp->test("4000_99_f.gif");
+$regExp->test("4000_09_abcdef.pdf");
+$regExp->test("2015_05_thisnameistoolong.jpg");
+$regExp->test("2015_05_doge.jpeg");
+$regExp->test("202301_cat.png");
+$regExp->test("2023001_cats.jpeg");
+
 ```
         
 Take a look at the [tests](tests/RegExpBuilderTest.php) for more examples
