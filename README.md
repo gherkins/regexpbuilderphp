@@ -31,6 +31,8 @@ https://github.com/gherkins/regexpbuilderphp/wiki
 
 ## Usage examples
 
+### Validate filenames
+
 ```php
 $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
 
@@ -60,6 +62,7 @@ $regExp->test("202301_cat.png");
 $regExp->test("2023001_cats.jpeg");
 ```
 
+### Multiple patterns
 ```php
 $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
 
