@@ -21,7 +21,7 @@ PHP port of https://github.com/thebinarysearchtree/regexpbuilderjs
 ```bash
 composer require gherkins/regexpbuilderphp
 ```
-... or download [the latest release](https://github.com/gherkins/regexpbuilderphp/releases/latest) and require both `RegExpBuilder.php` and `RegExp.php` manually from the 'src' folder.
+... or download [the latest release](https://github.com/gherkins/regexpbuilderphp/releases/latest) and require both `RegExpBuilder.php` and `RegExp.php` from the `src` folder.
 
 
 ## Documentation
