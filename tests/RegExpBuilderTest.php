@@ -758,12 +758,51 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $regEx = $this->r
             ->startOfLine()
             ->exactly(3)->of("p")->asGroup()
-            ->exactly(1)->of("q")
+            ->exactly(1)->of("q")->asGroup()
             ->exactly(1)->ofGroup(1)
+            ->exactly(1)->ofGroup(2)
             ->endOfLine()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("pppqppp"));
+        $this->assertTrue($regEx->test("pppqpppq"));
+    }
+
+    public function testGroupIncrement()
+    {
+        //aa--aa--
+        $builder1 = $this->r
+            ->exactly(2)->of("a")->asGroup()
+            ->exactly(2)->of("-")->asGroup()
+            ->exactly(1)->ofGroup(1)
+            ->exactly(1)->ofGroup(2);
+
+        //bb--bb--
+        $builder2 = $this->r
+            ->getNew()
+            ->exactly(2)->of("b")->asGroup()
+            ->exactly(2)->of("-")->asGroup()
+            ->exactly(1)->ofGroup(1)
+            ->exactly(1)->ofGroup(2);
+
+        $builder3 = $this->r
+            ->getNew()
+            ->find("123");
+
+        $regExp = $this->r
+            ->getNew()
+            ->startOfInput()
+            ->append($builder1)
+            ->append($builder2)
+            ->append($builder3)
+            ->endOfInput()
+            ->getRegExp();
+
+        $this->assertTrue($regExp->test("aa--aa--bb--bb--123"));
+
+        $this->assertFalse($regExp->test("def123abc"));
+        $this->assertFalse($regExp->test("abcabc"));
+        $this->assertFalse($regExp->test("abcdef312"));
+
     }
 
     public function testFrom()
