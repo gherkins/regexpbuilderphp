@@ -14,12 +14,12 @@ class RegExpBuilder
     /**
      * @var string
      */
-    protected $_flags      = "";
+    protected $_flags = "";
 
     /**
      * @var array
      */
-    protected $_literal    = array();
+    protected $_literal = array();
 
     /**
      * @var int
@@ -152,7 +152,6 @@ class RegExpBuilder
         }
 
         // @codeCoverageIgnoreStart
-        //won't happen...
         return null;
         // @codeCoverageIgnoreEnd
     }
@@ -167,27 +166,25 @@ class RegExpBuilder
     private function combineGroupNumberingAndGetLiteralral(RegExpBuilder $r)
     {
         $literal = $this->incrementGroupNumbering($r->getLiteral(), $this->_groupsUsed);
-        $this->_groupsUsed .= $r->_groupsUsed;
+        $this->_groupsUsed += $r->_groupsUsed;
 
         return $literal;
     }
 
     private function incrementGroupNumbering($literal, $increment)
     {
-        // @codeCoverageIgnoreStart
+
         if ($increment > 0) {
             $literal = preg_replace_callback(
-                '/[^\\]\\\d +/',
+                '/\\\(\d+)/',
                 function ($groupReference) use ($increment) {
-                    $groupNumber = (integer)substr($groupReference, 2) + $increment;
+                    $groupNumber = (int)substr($groupReference[0], 1) + $increment;
 
-                    return (int)substr($groupReference, 0, 2) + $groupNumber;
+                    return sprintf("\\%s", $groupNumber);
                 },
                 $literal
             );
-
         }
-        // @codeCoverageIgnoreEnd
 
         return $literal;
     }
@@ -195,10 +192,11 @@ class RegExpBuilder
     public function getRegExp()
     {
         $this->flushState();
-        return new RegExp(join("", $this->_literal) , $this->_flags);
+
+        return new RegExp(join("", $this->_literal), $this->_flags);
     }
 
-        private function addFlag($flag)
+    private function addFlag($flag)
     {
         if (strpos($this->_flags, $flag) === false) {
             $this->_flags .= $flag;
