@@ -54,9 +54,9 @@ $regExp->test("2030_11_katze.png");
 $regExp->test("4000_99_maus.gif");
 
 //false
-$regExp->test("4000_99_f.gif");
-$regExp->test("4000_09_abcdef.pdf");
-$regExp->test("2015_05_thisnameistoolong.jpg");
+$regExp->test("123_00_nein.gif");
+$regExp->test("4000_0_nein.pdf");
+$regExp->test("201505_nein.jpg");
 ```
 
 ### Finding filenames in text
