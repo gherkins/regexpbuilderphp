@@ -64,6 +64,7 @@ class RegExp
     public function test($string)
     {
         $matches = array();
+
         return (bool)call_user_func_array(
             $this->_method,
             array(
@@ -91,6 +92,10 @@ class RegExp
                 &$matches
             )
         );
+
+        if (isset($matches[0]) && is_array($matches[0])) {
+            return $matches[0];
+        }
 
         return $matches;
     }

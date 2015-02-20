@@ -98,6 +98,36 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testUsageExample3()
+    {
+        $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
+
+        $regExp = $builder
+            ->multiLine()
+            ->globalMatch()
+            ->min(1)->max(10)->anythingBut(" ")
+            ->eitherFind(".pdf")->orFind(".doc")
+            ->getRegExp();
+
+        $text = <<<EOF
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+sed diam nonumy SomeFile.pdf eirmod tempor invidunt ut labore et dolore
+magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+et justo duo dolores et ea rebum. doc_04.pdf Stet clita kasd gubergren,
+no sea takimata sanctus est Lorem ipsum dolor sit amet.
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+sed diam nonumy eirmod tempor invidunt ut File.doc labore et
+dolore magna aliquyam erat, sed diam voluptua.
+EOF;
+
+        $matches = $regExp->exec($text);
+
+        $this->assertTrue($matches[0] === "SomeFile.pdf");
+        $this->assertTrue($matches[1] === "doc_04.pdf");
+        $this->assertTrue($matches[2] === "File.doc");
+
+    }
+
 
     public function testMoney()
     {
