@@ -100,4 +100,14 @@ class RegExp
         return $matches;
     }
 
+
+    public function replace($tring, $callback)
+    {
+        return preg_replace_callback(
+            sprintf("/%s/%s", $this->_expr, $this->_flags),
+            $callback,
+            $tring
+        );
+    }
+
 }
