@@ -49,17 +49,14 @@ $regExp = $builder
     ->getRegExp();
 
 //true
-$regExp->test("2020_10_doge.jpg");
-$regExp->test("2030_11_octocat.png");
-$regExp->test("4000_99_cats.gif");
+$regExp->test("2020_10_hund.jpg");
+$regExp->test("2030_11_katze.png");
+$regExp->test("4000_99_maus.gif");
 
 //false
 $regExp->test("4000_99_f.gif");
 $regExp->test("4000_09_abcdef.pdf");
 $regExp->test("2015_05_thisnameistoolong.jpg");
-$regExp->test("2015_05_doge.jpeg");
-$regExp->test("202301_cat.png");
-$regExp->test("2023001_cats.jpeg");
 ```
 
 ### Finding filenames in text
@@ -78,11 +75,7 @@ $text = <<<EOF
 Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
 sed diam nonumy SomeFile.pdf eirmod tempor invidunt ut labore et dolore
 magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. doc_04.pdf Stet clita kasd gubergren,
-no sea takimata sanctus est Lorem ipsum dolor sit amet.
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-sed diam nonumy eirmod tempor invidunt ut File.doc labore et
-dolore magna aliquyam erat, sed diam voluptua.
+et justo duo dolores et ea rebum. doc_04.pdf Stet clita kasd File.doc.
 EOF;
 
 $matches = $regExp->exec($text);
