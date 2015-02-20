@@ -29,7 +29,7 @@ composer require gherkins/regexpbuilderphp
 https://github.com/gherkins/regexpbuilderphp/wiki
 
 
-## Usage examples
+## Examples
 
 ### Validating filenames
 
