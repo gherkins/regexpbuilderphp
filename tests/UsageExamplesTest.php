@@ -112,39 +112,21 @@ EOF;
         $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
 
         $regExp = $builder
-            ->multiLine()
-            ->globalMatch()
-            ->ignoreCase()
-            ->find("say")
+            ->min(1)
+            ->max(10)
+            ->digits()
             ->getRegExp();
 
-        $text = <<<EOF
-Say you, say me
-Say it for always
-That's the way it should be
-Say you, say me
-Say it together
-Naturally
-EOF;
+        $text = "98 bottles of beer on the wall";
 
         $text = $regExp->replace(
             $text,
-            function ($hit) {
-                return "beer";
+            function ($match) {
+                return (int)$match + 1;
             }
         );
 
-        $regExp = $builder
-            ->getNew()
-            ->multiLine()
-            ->globalMatch()
-            ->find("beer")
-            ->getRegExp();
-
-        $matches = $regExp->exec($text);
-
-        $this->assertTrue(count($matches) === 6);
-
+        $this->assertTrue("99 bottles of beer on the wall" === $text);
 
     }
 

@@ -101,12 +101,14 @@ class RegExp
     }
 
 
-    public function replace($tring, $callback)
+    public function replace($string, $callback)
     {
         return preg_replace_callback(
             sprintf("/%s/%s", $this->_expr, $this->_flags),
-            $callback,
-            $tring
+            function ($hit) use ($callback) {
+                return call_user_func($callback, $hit[0]);
+            },
+            $string
         );
     }
 

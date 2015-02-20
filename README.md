@@ -31,7 +31,7 @@ https://github.com/gherkins/regexpbuilderphp/wiki
 
 ## Examples
 
-### Validating filenames
+### Validation
 
 ```php
 $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
@@ -59,7 +59,7 @@ $regExp->test("4000_0_nein.pdf");
 $regExp->test("201505_nein.jpg");
 ```
 
-### Finding filenames in text
+### Search
 
 ```php
 $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
@@ -86,7 +86,31 @@ $matches = $regExp->exec($text);
 ($matches[2] === "File.doc");
 ```
 
-### Combining multiple patterns
+### Replace
+
+```php
+$builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
+
+$regExp = $builder
+    ->min(1)
+    ->max(10)
+    ->digits()
+    ->getRegExp();
+
+$text = "98 bottles of beer on the wall";
+
+$text = $regExp->replace(
+    $text,
+    function ($match) {
+        return (int)$match + 1;
+    }
+);
+
+//true
+("99 bottles of beer on the wall" === $text);
+```
+
+### Validation with multiple patterns
 
 ```php
 $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
