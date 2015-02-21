@@ -28,7 +28,7 @@ class UsageExamplesTest extends \PHPUnit_Framework_TestCase
             ->then("_")
             ->min(3)->max(10)->letters()
             ->then(".")
-            ->eitherFind("png")->orFind("jpg")->orFind("gif")
+            ->anyOf(array("png", "jpg", "gif"))
             ->endOfInput()
             ->getRegExp();
 
@@ -49,7 +49,7 @@ class UsageExamplesTest extends \PHPUnit_Framework_TestCase
         $a = $builder
             ->startOfInput()
             ->exactly(3)->digits()
-            ->eitherFind(".pdf")->orFind(".doc")
+            ->anyOf(array(".pdf", ".doc"))
             ->endOfInput();
 
         $b = $builder
@@ -85,7 +85,7 @@ class UsageExamplesTest extends \PHPUnit_Framework_TestCase
             ->multiLine()
             ->globalMatch()
             ->min(1)->max(10)->anythingBut(" ")
-            ->eitherFind(".pdf")->orFind(".doc")
+            ->anyOf(array(".pdf", ".doc"))
             ->getRegExp();
 
         $text = <<<EOF

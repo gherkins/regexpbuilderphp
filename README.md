@@ -47,7 +47,7 @@ $regExp = $builder
     ->then("_")
     ->min(3)->max(10)->letters()
     ->then(".")
-    ->eitherFind("png")->orFind("jpg")->orFind("gif")
+    ->anyOf(array("png", "jpg", "gif"))
     ->endOfInput()
     ->getRegExp();
 
@@ -69,7 +69,7 @@ $regExp = $builder
     ->multiLine()
     ->globalMatch()
     ->min(1)->max(10)->anythingBut(" ")
-    ->eitherFind(".pdf")->orFind(".doc")
+    ->anyOf(array(".pdf", ".doc"))
     ->getRegExp();
 
 $text = <<<EOF
@@ -115,7 +115,7 @@ $text = $regExp->replace(
 $a = $builder
     ->startOfInput()
     ->exactly(3)->digits()
-    ->eitherFind(".pdf")->orFind(".doc")
+    ->anyOf(array(".pdf", ".doc"))
     ->endOfInput();
 
 $b = $builder
