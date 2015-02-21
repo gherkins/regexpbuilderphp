@@ -21,7 +21,7 @@ PHP port of https://github.com/thebinarysearchtree/regexpbuilderjs
 ```bash
 composer require gherkins/regexpbuilderphp
 ```
-... or download [the latest release](https://github.com/gherkins/regexpbuilderphp/releases/latest) and require both `RegExpBuilder.php` and `RegExp.php` from the `src` folder.
+Or download [the latest release](https://github.com/gherkins/regexpbuilderphp/releases/latest) and require `RegExpBuilder.php` and `RegExp.php` from `/src`.
 
 
 ## Documentation
@@ -31,11 +31,14 @@ https://github.com/gherkins/regexpbuilderphp/wiki
 
 ## Examples
 
+```php
+use Gherkins\RegExpBuilderPHP;
+$builder = new RegExpBuilder();
+```
+
 ### Validation
 
 ```php
-$builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
-
 $regExp = $builder
     ->startOfInput()
     ->exactly(4)->digits()
@@ -62,8 +65,6 @@ $regExp->test("201505_nein.jpg");
 ### Search
 
 ```php
-$builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
-
 $regExp = $builder
     ->multiLine()
     ->globalMatch()
@@ -89,8 +90,6 @@ $matches = $regExp->exec($text);
 ### Replace
 
 ```php
-$builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
-
 $regExp = $builder
     ->min(1)
     ->max(10)
@@ -113,8 +112,6 @@ $text = $regExp->replace(
 ### Validation with multiple patterns
 
 ```php
-$builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
-
 $a = $builder
     ->startOfInput()
     ->exactly(3)->digits()
