@@ -279,6 +279,22 @@ class RegExpBuilder
         return $this->setOr($r);
     }
 
+    public function anyOf(array $r)
+    {
+        if (count($r) < 1) {
+            return $this;
+        }
+
+        $firstToken = array_shift($r);
+        $this->eitherFind($firstToken);
+
+        foreach ($r as $token) {
+            $this->orFind($token);
+        }
+
+        return $this;
+    }
+
     private function setOr($r)
     {
         $either = $this->_either;

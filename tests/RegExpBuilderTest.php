@@ -610,6 +610,24 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($regEx->test("r"));
     }
 
+    public function testAnyOf()
+    {
+        $regEx = $this->r
+            ->anyOf(array("p", "q"))
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("p"));
+        $this->assertTrue($regEx->test("q"));
+
+        $this->assertFalse($regEx->test("r"));
+
+        $regEx = $this->r
+            ->anyOf(array())
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("p"));
+    }
+
     public function testExactly()
     {
         $regEx = $this->r
