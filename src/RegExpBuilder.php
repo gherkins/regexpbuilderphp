@@ -649,7 +649,7 @@ class RegExpBuilder
 
     private function sanitize($s)
     {
-        return preg_quote($s);
+        return preg_quote($s, "/");
     }
 
     /**

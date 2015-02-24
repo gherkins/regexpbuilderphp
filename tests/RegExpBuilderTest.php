@@ -880,4 +880,17 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($regEx->test("pdartq"));
     }
 
+    public function testDelimiter()
+    {
+        $regEx = $this->r
+            ->startOfInput()
+            ->exactly(3)->digits()
+            ->exactly(1)->of("/")
+            ->exactly(2)->letters()
+            ->endOfInput()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->test("123/ab"));
+    }
+
 }
