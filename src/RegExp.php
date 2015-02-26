@@ -56,12 +56,24 @@ class RegExp
     }
 
     /**
+     * alias for matches
+     *
+     * @deprecated
+     * @param $string
+     * @return bool
+     */
+    public function test($string)
+    {
+        return $this->matches($string);
+    }
+
+    /**
      * check string w/ preg_match
      *
      * @param $string
      * @return bool
      */
-    public function test($string)
+    public function matches($string)
     {
         $matches = array();
 
@@ -76,19 +88,31 @@ class RegExp
     }
 
     /**
-     * execute preg_match, return matches
      *
-     * @param $string
+     * alias for find()
+     *
+     * @param $haystack
      * @return array
      */
-    public function exec($string)
+    public function exec($haystack)
+    {
+        return $this->find($haystack);
+    }
+
+    /**
+     * execute preg_match, return matches
+     *
+     * @param $haystack
+     * @return array
+     */
+    public function find($haystack)
     {
         $matches = array();
         call_user_func_array(
             $this->_method,
             array(
                 sprintf("/%s/%s", $this->_expr, $this->_flags),
-                $string,
+                $haystack,
                 &$matches
             )
         );

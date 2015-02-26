@@ -52,14 +52,14 @@ $regExp = $builder
     ->getRegExp();
 
 //true
-$regExp->test("2020_10_hund.jpg");
-$regExp->test("2030_11_katze.png");
-$regExp->test("4000_99_maus.gif");
+$regExp->matches("2020_10_hund.jpg");
+$regExp->matches("2030_11_katze.png");
+$regExp->matches("4000_99_maus.gif");
 
 //false
-$regExp->test("123_00_nein.gif");
-$regExp->test("4000_0_nein.pdf");
-$regExp->test("201505_nein.jpg");
+$regExp->matches("123_00_nein.gif");
+$regExp->matches("4000_0_nein.pdf");
+$regExp->matches("201505_nein.jpg");
 ```
 
 ### Search
@@ -132,16 +132,16 @@ $regExp = $builder
     ->getRegExp();
 
 //true
-$regExp->test("123.pdf");
-$regExp->test("456.doc");
-$regExp->test("bbbb.jpg");
-$regExp->test("aaaa.jpg");
+$regExp->matches("123.pdf");
+$regExp->matches("456.doc");
+$regExp->matches("bbbb.jpg");
+$regExp->matches("aaaa.jpg");
 
 //false
-$regExp->test("1234.pdf");
-$regExp->test("123.gif");
-$regExp->test("aaaaa.jpg");
-$regExp->test("456.docx");
+$regExp->matches("1234.pdf");
+$regExp->matches("123.gif");
+$regExp->matches("aaaaa.jpg");
+$regExp->matches("456.docx");
 ```
         
 Take a look at the [tests](tests/RegExpBuilderTest.php) for more examples

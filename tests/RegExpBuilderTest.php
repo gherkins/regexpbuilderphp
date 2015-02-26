@@ -43,11 +43,11 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->digit()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("€128,99"));
-        $this->assertTrue($regEx->test("€81,99"));
+        $this->assertTrue($regEx->matches("€128,99"));
+        $this->assertTrue($regEx->matches("€81,99"));
 
-        $this->assertFalse($regEx->test("€8,9"));
-        $this->assertFalse($regEx->test("12.123.8,99 €"));
+        $this->assertFalse($regEx->matches("€8,9"));
+        $this->assertFalse($regEx->matches("12.123.8,99 €"));
 
     }
 
@@ -65,11 +65,11 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->digit()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("€ 1.228,99"));
-        $this->assertTrue($regEx->test("€ 452.000,99"));
+        $this->assertTrue($regEx->matches("€ 1.228,99"));
+        $this->assertTrue($regEx->matches("€ 452.000,99"));
 
-        $this->assertFalse($regEx->test("€8,9"));
-        $this->assertFalse($regEx->test("12.123.8,99 €"));
+        $this->assertFalse($regEx->matches("€8,9"));
+        $this->assertFalse($regEx->matches("12.123.8,99 €"));
 
     }
 
@@ -82,8 +82,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->digit()
             ->digit();
 
-        $this->assertTrue($builder1->getRegExp()->test("€128,99"));
-        $this->assertTrue($builder1->getRegExp()->test("€81,99"));
+        $this->assertTrue($builder1->getRegExp()->matches("€128,99"));
+        $this->assertTrue($builder1->getRegExp()->matches("€81,99"));
 
         $builder2 = $this->r->getNew()
             ->find("€")
@@ -94,17 +94,17 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->digit()
             ->digit();
 
-        $this->assertTrue($builder2->getRegExp()->test("€1.228,99"));
-        $this->assertTrue($builder2->getRegExp()->test("€452.000,99"));
+        $this->assertTrue($builder2->getRegExp()->matches("€1.228,99"));
+        $this->assertTrue($builder2->getRegExp()->matches("€452.000,99"));
 
         $combined = $this->r->getNew()
             ->eitherFind($builder1)
             ->orFind($builder2);
 
-        $this->assertTrue($combined->getRegExp()->test("€128,99"));
-        $this->assertTrue($combined->getRegExp()->test("€81,99"));
-        $this->assertTrue($combined->getRegExp()->test("€1.228,99"));
-        $this->assertTrue($combined->getRegExp()->test("€452.000,99"));
+        $this->assertTrue($combined->getRegExp()->matches("€128,99"));
+        $this->assertTrue($combined->getRegExp()->matches("€81,99"));
+        $this->assertTrue($combined->getRegExp()->matches("€1.228,99"));
+        $this->assertTrue($combined->getRegExp()->matches("€452.000,99"));
 
 
     }
@@ -117,9 +117,9 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->maybe("a")
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("aabba1"));
+        $this->assertTrue($regEx->matches("aabba1"));
 
-        $this->assertFalse($regEx->test("12aabba1"));
+        $this->assertFalse($regEx->matches("12aabba1"));
 
     }
 
@@ -131,9 +131,9 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->maybeSome(array("a", "b", "c"))
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("aabba1"));
+        $this->assertTrue($regEx->matches("aabba1"));
 
-        $this->assertFalse($regEx->test("12aabba1"));
+        $this->assertFalse($regEx->matches("12aabba1"));
     }
 
     public function testSome()
@@ -144,9 +144,9 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->some(array("a", "b", "c"))
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("aabba1"));
+        $this->assertTrue($regEx->matches("aabba1"));
 
-        $this->assertFalse($regEx->test("12aabba1"));
+        $this->assertFalse($regEx->matches("12aabba1"));
     }
 
     public function testLettersDigits()
@@ -158,11 +158,11 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->append($this->r->getNew()->min(2)->digits())
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("asf24"));
+        $this->assertTrue($regEx->matches("asf24"));
 
-        $this->assertFalse($regEx->test("af24"));
-        $this->assertFalse($regEx->test("afs4"));
-        $this->assertFalse($regEx->test("234asas"));
+        $this->assertFalse($regEx->matches("af24"));
+        $this->assertFalse($regEx->matches("afs4"));
+        $this->assertFalse($regEx->matches("234asas"));
 
     }
 
@@ -173,8 +173,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->notLetter()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("234asd"));
-        $this->assertFalse($regEx->test("asd425"));
+        $this->assertTrue($regEx->matches("234asd"));
+        $this->assertFalse($regEx->matches("asd425"));
     }
 
     public function testNotLetters()
@@ -185,10 +185,10 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->notLetters()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("234asd"));
-        $this->assertTrue($regEx->test("@234asd"));
+        $this->assertTrue($regEx->matches("234asd"));
+        $this->assertTrue($regEx->matches("@234asd"));
 
-        $this->assertFalse($regEx->test("asd425"));
+        $this->assertFalse($regEx->matches("asd425"));
     }
 
     public function testNotDigit()
@@ -198,9 +198,9 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->notDigit()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("a234asd"));
+        $this->assertTrue($regEx->matches("a234asd"));
 
-        $this->assertFalse($regEx->test("45asd"));
+        $this->assertFalse($regEx->matches("45asd"));
     }
 
     public function testNotDigits()
@@ -211,10 +211,10 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->notDigits()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("a234asd"));
-        $this->assertTrue($regEx->test("@234asd"));
+        $this->assertTrue($regEx->matches("a234asd"));
+        $this->assertTrue($regEx->matches("@234asd"));
 
-        $this->assertFalse($regEx->test("425asd"));
+        $this->assertFalse($regEx->matches("425asd"));
     }
 
     public function testAny()
@@ -224,11 +224,11 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->any()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("a.jpg"));
-        $this->assertTrue($regEx->test("a.b_asdasd"));
-        $this->assertTrue($regEx->test("4"));
+        $this->assertTrue($regEx->matches("a.jpg"));
+        $this->assertTrue($regEx->matches("a.b_asdasd"));
+        $this->assertTrue($regEx->matches("4"));
 
-        $this->assertFalse($regEx->test(""));
+        $this->assertFalse($regEx->matches(""));
     }
 
     public function testOfAny()
@@ -240,10 +240,10 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->find("_")
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("12_123123.jpg"));
-        $this->assertTrue($regEx->test("ab_asdasd"));
+        $this->assertTrue($regEx->matches("12_123123.jpg"));
+        $this->assertTrue($regEx->matches("ab_asdasd"));
 
-        $this->assertFalse($regEx->test("425asd"));
+        $this->assertFalse($regEx->matches("425asd"));
     }
 
     public function testOfAny2()
@@ -254,7 +254,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->endOfLine()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("pqr"));
+        $this->assertTrue($regEx->matches("pqr"));
     }
 
     public function testAnything()
@@ -264,9 +264,9 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->anything()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("a.jpg"));
-        $this->assertTrue($regEx->test("a.b_asdasd"));
-        $this->assertTrue($regEx->test("4"));
+        $this->assertTrue($regEx->matches("a.jpg"));
+        $this->assertTrue($regEx->matches("a.b_asdasd"));
+        $this->assertTrue($regEx->matches("4"));
     }
 
     public function testAnythingBut()
@@ -276,11 +276,11 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->anythingBut("admin")
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("a.jpg"));
-        $this->assertTrue($regEx->test("a.b_asdasd"));
-        $this->assertTrue($regEx->test("4"));
+        $this->assertTrue($regEx->matches("a.jpg"));
+        $this->assertTrue($regEx->matches("a.b_asdasd"));
+        $this->assertTrue($regEx->matches("4"));
 
-        $this->assertFalse($regEx->test("admin"));
+        $this->assertFalse($regEx->matches("admin"));
 
     }
 
@@ -291,12 +291,12 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->anythingBut("Y")
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("a.jpg"));
-        $this->assertTrue($regEx->test("a.b_asdasd"));
-        $this->assertTrue($regEx->test("4"));
+        $this->assertTrue($regEx->matches("a.jpg"));
+        $this->assertTrue($regEx->matches("a.b_asdasd"));
+        $this->assertTrue($regEx->matches("4"));
 
-        $this->assertFalse($regEx->test("YY"));
-        $this->assertFalse($regEx->test("Y"));
+        $this->assertFalse($regEx->matches("YY"));
+        $this->assertFalse($regEx->matches("Y"));
 
     }
 
@@ -309,10 +309,10 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->nor($this->r->getNew()->exactly(1)->of("juice"))
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("beer"));
+        $this->assertTrue($regEx->matches("beer"));
 
-        $this->assertFalse($regEx->test("milk"));
-        $this->assertFalse($regEx->test("juice"));
+        $this->assertFalse($regEx->matches("milk"));
+        $this->assertFalse($regEx->matches("juice"));
 
     }
 
@@ -327,10 +327,10 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->nor($this->r->getNew()->exactly(1)->of("juice"))
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("beer"));
+        $this->assertTrue($regEx->matches("beer"));
 
-        $this->assertFalse($regEx->test("milk"));
-        $this->assertFalse($regEx->test("juice"));
+        $this->assertFalse($regEx->matches("milk"));
+        $this->assertFalse($regEx->matches("juice"));
 
     }
 
@@ -341,10 +341,10 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->lowerCaseLetter()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("a24"));
+        $this->assertTrue($regEx->matches("a24"));
 
-        $this->assertFalse($regEx->test("234a"));
-        $this->assertFalse($regEx->test("A34"));
+        $this->assertFalse($regEx->matches("234a"));
+        $this->assertFalse($regEx->matches("A34"));
     }
 
     public function testLowerCaseLetters()
@@ -355,11 +355,11 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->lowerCaseLetters()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("aa24"));
+        $this->assertTrue($regEx->matches("aa24"));
 
-        $this->assertFalse($regEx->test("aAa234a"));
-        $this->assertFalse($regEx->test("234a"));
-        $this->assertFalse($regEx->test("A34"));
+        $this->assertFalse($regEx->matches("aAa234a"));
+        $this->assertFalse($regEx->matches("234a"));
+        $this->assertFalse($regEx->matches("A34"));
     }
 
     public function testUpperCaseLetter()
@@ -369,10 +369,10 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->upperCaseLetter()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("A24"));
+        $this->assertTrue($regEx->matches("A24"));
 
-        $this->assertFalse($regEx->test("aa234a"));
-        $this->assertFalse($regEx->test("34aa"));
+        $this->assertFalse($regEx->matches("aa234a"));
+        $this->assertFalse($regEx->matches("34aa"));
     }
 
     public function testUpperCaseLetters()
@@ -383,11 +383,11 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->upperCaseLetters()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("AA24"));
+        $this->assertTrue($regEx->matches("AA24"));
 
-        $this->assertFalse($regEx->test("aAa234a"));
-        $this->assertFalse($regEx->test("234a"));
-        $this->assertFalse($regEx->test("a34"));
+        $this->assertFalse($regEx->matches("aAa234a"));
+        $this->assertFalse($regEx->matches("234a"));
+        $this->assertFalse($regEx->matches("a34"));
     }
 
     public function testLetterDigit()
@@ -400,9 +400,9 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->append($this->r->getNew()->digit())
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("a5"));
+        $this->assertTrue($regEx->matches("a5"));
 
-        $this->assertFalse($regEx->test("5a"));
+        $this->assertFalse($regEx->matches("5a"));
 
     }
 
@@ -413,9 +413,9 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->tab()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("\tp"));
-        $this->assertFalse($regEx->test("q\tp\t"));
-        $this->assertFalse($regEx->test("p\t"));
+        $this->assertTrue($regEx->matches("\tp"));
+        $this->assertFalse($regEx->matches("q\tp\t"));
+        $this->assertFalse($regEx->matches("p\t"));
 
     }
 
@@ -428,7 +428,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->exactly(1)->of("q")
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("p\tq"));
+        $this->assertTrue($regEx->matches("p\tq"));
     }
 
     public function testTabs()
@@ -439,11 +439,11 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->tabs()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("\t\tp"));
+        $this->assertTrue($regEx->matches("\t\tp"));
 
-        $this->assertFalse($regEx->test("\tp"));
-        $this->assertFalse($regEx->test("q\tp\t"));
-        $this->assertFalse($regEx->test("p\t"));
+        $this->assertFalse($regEx->matches("\tp"));
+        $this->assertFalse($regEx->matches("q\tp\t"));
+        $this->assertFalse($regEx->matches("p\t"));
 
     }
 
@@ -459,11 +459,11 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->exactly(1)->whitespace()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("  pdr "));
+        $this->assertTrue($regEx->matches("  pdr "));
 
-        $this->assertFalse($regEx->test(" pdr "));
-        $this->assertFalse($regEx->test("  pd r "));
-        $this->assertFalse($regEx->test(" p dr "));
+        $this->assertFalse($regEx->matches(" pdr "));
+        $this->assertFalse($regEx->matches("  pd r "));
+        $this->assertFalse($regEx->matches(" p dr "));
 
     }
 
@@ -478,7 +478,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->exactly(1)->whitespace()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("\tpdr\t"));
+        $this->assertTrue($regEx->matches("\tpdr\t"));
     }
 
     public function testNotWhitespace()
@@ -488,10 +488,10 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->notWhitespace()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("a234asd"));
+        $this->assertTrue($regEx->matches("a234asd"));
 
-        $this->assertFalse($regEx->test(" 45asd"));
-        $this->assertFalse($regEx->test("\t45asd"));
+        $this->assertFalse($regEx->matches(" 45asd"));
+        $this->assertFalse($regEx->matches("\t45asd"));
     }
 
     public function testNotWhitespace2()
@@ -502,10 +502,10 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->notWhitespace()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("a234asd"));
+        $this->assertTrue($regEx->matches("a234asd"));
 
-        $this->assertFalse($regEx->test(" 45asd"));
-        $this->assertFalse($regEx->test("\t45asd"));
+        $this->assertFalse($regEx->matches(" 45asd"));
+        $this->assertFalse($regEx->matches("\t45asd"));
     }
 
     public function testLineBreak()
@@ -515,12 +515,12 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->lineBreak()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("\n\ra234asd"));
-        $this->assertTrue($regEx->test("\na234asd"));
-        $this->assertTrue($regEx->test("\ra234asd"));
+        $this->assertTrue($regEx->matches("\n\ra234asd"));
+        $this->assertTrue($regEx->matches("\na234asd"));
+        $this->assertTrue($regEx->matches("\ra234asd"));
 
-        $this->assertFalse($regEx->test(" 45asd"));
-        $this->assertFalse($regEx->test("\t45asd"));
+        $this->assertFalse($regEx->matches(" 45asd"));
+        $this->assertFalse($regEx->matches("\t45asd"));
     }
 
     public function testLineBreaks()
@@ -531,12 +531,12 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->lineBreaks()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("\n\ra234asd"));
-        $this->assertTrue($regEx->test("\n\na234asd"));
-        $this->assertTrue($regEx->test("\r\ra234asd"));
+        $this->assertTrue($regEx->matches("\n\ra234asd"));
+        $this->assertTrue($regEx->matches("\n\na234asd"));
+        $this->assertTrue($regEx->matches("\r\ra234asd"));
 
-        $this->assertFalse($regEx->test(" 45asd"));
-        $this->assertFalse($regEx->test("\t45asd"));
+        $this->assertFalse($regEx->matches(" 45asd"));
+        $this->assertFalse($regEx->matches("\t45asd"));
     }
 
 
@@ -548,8 +548,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->of("p")
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("p"));
-        $this->assertFalse($regEx->test("qp"));
+        $this->assertTrue($regEx->matches("p"));
+        $this->assertFalse($regEx->matches("qp"));
     }
 
     public function testEndOfLine()
@@ -560,8 +560,8 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->endOfLine()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("p"));
-        $this->assertFalse($regEx->test("pq"));
+        $this->assertTrue($regEx->matches("p"));
+        $this->assertFalse($regEx->matches("pq"));
     }
 
     public function testEitherLikeOrLike()
@@ -573,11 +573,11 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->endOfLine()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("p"));
-        $this->assertTrue($regEx->test("qq"));
+        $this->assertTrue($regEx->matches("p"));
+        $this->assertTrue($regEx->matches("qq"));
 
-        $this->assertFalse($regEx->test("pqq"));
-        $this->assertFalse($regEx->test("qqp"));
+        $this->assertFalse($regEx->matches("pqq"));
+        $this->assertFalse($regEx->matches("qqp"));
     }
 
 
@@ -590,11 +590,11 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->orFind($this->r->getNew()->exactly(1)->of("r"))
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("p"));
-        $this->assertTrue($regEx->test("q"));
-        $this->assertTrue($regEx->test("r"));
+        $this->assertTrue($regEx->matches("p"));
+        $this->assertTrue($regEx->matches("q"));
+        $this->assertTrue($regEx->matches("r"));
 
-        $this->assertFalse($regEx->test("s"));
+        $this->assertFalse($regEx->matches("s"));
     }
 
     public function testEitherOr()
@@ -604,10 +604,10 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->orFind("q")
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("p"));
-        $this->assertTrue($regEx->test("q"));
+        $this->assertTrue($regEx->matches("p"));
+        $this->assertTrue($regEx->matches("q"));
 
-        $this->assertFalse($regEx->test("r"));
+        $this->assertFalse($regEx->matches("r"));
     }
 
     public function testAnyOf()
@@ -623,19 +623,19 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             )
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("abc"));
-        $this->assertTrue($regEx->test("def"));
-        $this->assertTrue($regEx->test("22"));
+        $this->assertTrue($regEx->matches("abc"));
+        $this->assertTrue($regEx->matches("def"));
+        $this->assertTrue($regEx->matches("22"));
 
-        $this->assertFalse($regEx->test("r"));
-        $this->assertFalse($regEx->test("1"));
+        $this->assertFalse($regEx->matches("r"));
+        $this->assertFalse($regEx->matches("1"));
 
         $regEx = $this->r
             ->getNew()
             ->anyOf(array())
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("p"));
+        $this->assertTrue($regEx->matches("p"));
     }
 
     public function testExactly()
@@ -646,10 +646,10 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->endOfLine()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("ppp"));
+        $this->assertTrue($regEx->matches("ppp"));
 
-        $this->assertFalse($regEx->test("pp"));
-        $this->assertFalse($regEx->test("pppp"));
+        $this->assertFalse($regEx->matches("pp"));
+        $this->assertFalse($regEx->matches("pppp"));
     }
 
     public function testMin()
@@ -660,11 +660,11 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->endOfLine()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("pp"));
-        $this->assertTrue($regEx->test("ppp"));
-        $this->assertTrue($regEx->test("ppppppp"));
+        $this->assertTrue($regEx->matches("pp"));
+        $this->assertTrue($regEx->matches("ppp"));
+        $this->assertTrue($regEx->matches("ppppppp"));
 
-        $this->assertFalse($regEx->test("p"));
+        $this->assertFalse($regEx->matches("p"));
     }
 
     public function testMax()
@@ -675,12 +675,12 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->endOfLine()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("p"));
-        $this->assertTrue($regEx->test("pp"));
-        $this->assertTrue($regEx->test("ppp"));
+        $this->assertTrue($regEx->matches("p"));
+        $this->assertTrue($regEx->matches("pp"));
+        $this->assertTrue($regEx->matches("ppp"));
 
-        $this->assertFalse($regEx->test("pppp"));
-        $this->assertFalse($regEx->test("pppppppp"));
+        $this->assertFalse($regEx->matches("pppp"));
+        $this->assertFalse($regEx->matches("pppppppp"));
     }
 
     public function testMinMax()
@@ -691,14 +691,14 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->endOfLine()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("ppp"));
-        $this->assertTrue($regEx->test("ppppp"));
-        $this->assertTrue($regEx->test("ppppppp"));
+        $this->assertTrue($regEx->matches("ppp"));
+        $this->assertTrue($regEx->matches("ppppp"));
+        $this->assertTrue($regEx->matches("ppppppp"));
 
-        $this->assertFalse($regEx->test("pp"));
-        $this->assertFalse($regEx->test("p"));
-        $this->assertFalse($regEx->test("pppppppp"));
-        $this->assertFalse($regEx->test("pppppppppppp"));
+        $this->assertFalse($regEx->matches("pp"));
+        $this->assertFalse($regEx->matches("p"));
+        $this->assertFalse($regEx->matches("pppppppp"));
+        $this->assertFalse($regEx->matches("pppppppppppp"));
     }
 
     public function testOf()
@@ -709,9 +709,9 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->endOfLine()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("p p p p p p "));
+        $this->assertTrue($regEx->matches("p p p p p p "));
 
-        $this->assertFalse($regEx->test("p p p p pp"));
+        $this->assertFalse($regEx->matches("p p p p pp"));
     }
 
 
@@ -726,7 +726,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->endOfLine()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("pppqpppq"));
+        $this->assertTrue($regEx->matches("pppqpppq"));
     }
 
     public function testGroupIncrement()
@@ -759,11 +759,11 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->endOfInput()
             ->getRegExp();
 
-        $this->assertTrue($regExp->test("aa--aa--bb--bb--123"));
+        $this->assertTrue($regExp->matches("aa--aa--bb--bb--123"));
 
-        $this->assertFalse($regExp->test("def123abc"));
-        $this->assertFalse($regExp->test("abcabc"));
-        $this->assertFalse($regExp->test("abcdef312"));
+        $this->assertFalse($regExp->matches("def123abc"));
+        $this->assertFalse($regExp->matches("abcabc"));
+        $this->assertFalse($regExp->matches("abcdef312"));
 
     }
 
@@ -775,12 +775,12 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->endOfLine()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("ppp"));
-        $this->assertTrue($regEx->test("qqq"));
-        $this->assertTrue($regEx->test("ppq"));
-        $this->assertTrue($regEx->test("rqp"));
+        $this->assertTrue($regEx->matches("ppp"));
+        $this->assertTrue($regEx->matches("qqq"));
+        $this->assertTrue($regEx->matches("ppq"));
+        $this->assertTrue($regEx->matches("rqp"));
 
-        $this->assertFalse($regEx->test("pyy"));
+        $this->assertFalse($regEx->matches("pyy"));
     }
 
 
@@ -792,9 +792,9 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->endOfLine()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("lmn"));
+        $this->assertTrue($regEx->matches("lmn"));
 
-        $this->assertFalse($regEx->test("mnq"));
+        $this->assertFalse($regEx->matches("mnq"));
     }
 
     public function testLike()
@@ -810,9 +810,9 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->getRegExp();
 
 
-        $this->assertTrue($regEx->test("pqqpqq"));
+        $this->assertTrue($regEx->matches("pqqpqq"));
 
-        $this->assertFalse($regEx->test("qppqpp"));
+        $this->assertFalse($regEx->matches("qppqpp"));
     }
 
 
@@ -836,12 +836,12 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->ahead($this->r->getNew()->exactly(1)->of("lang"))
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("dartlang"));
-        $this->assertTrue($regEx->test("dartlanglang"));
-        $this->assertTrue($regEx->test("langdartlang"));
+        $this->assertTrue($regEx->matches("dartlang"));
+        $this->assertTrue($regEx->matches("dartlanglang"));
+        $this->assertTrue($regEx->matches("langdartlang"));
 
-        $this->assertFalse($regEx->test("dartpqr"));
-        $this->assertFalse($regEx->test("langdart"));
+        $this->assertFalse($regEx->matches("dartpqr"));
+        $this->assertFalse($regEx->matches("langdart"));
 
     }
 
@@ -852,9 +852,9 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->notAhead($this->r->getNew()->exactly(1)->of("pqr"))
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("dartlang"));
+        $this->assertTrue($regEx->matches("dartlang"));
 
-        $this->assertFalse($regEx->test("dartpqr"));
+        $this->assertFalse($regEx->matches("dartpqr"));
     }
 
     public function testAsGroup()
@@ -877,7 +877,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->optional($this->r->getNew()->exactly(1)->from(array("p", "q", "r")))
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("pdartq"));
+        $this->assertTrue($regEx->matches("pdartq"));
     }
 
     public function testDelimiter()
@@ -890,7 +890,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->endOfInput()
             ->getRegExp();
 
-        $this->assertTrue($regEx->test("123/ab"));
+        $this->assertTrue($regEx->matches("123/ab"));
     }
 
 }

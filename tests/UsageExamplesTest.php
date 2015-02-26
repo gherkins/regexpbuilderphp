@@ -32,13 +32,13 @@ class UsageExamplesTest extends \PHPUnit_Framework_TestCase
             ->endOfInput()
             ->getRegExp();
 
-        $this->assertTrue($regExp->test("2020_10_hund.jpg"));
-        $this->assertTrue($regExp->test("2030_11_katze.png"));
-        $this->assertTrue($regExp->test("4000_99_maus.gif"));
+        $this->assertTrue($regExp->matches("2020_10_hund.jpg"));
+        $this->assertTrue($regExp->matches("2030_11_katze.png"));
+        $this->assertTrue($regExp->matches("4000_99_maus.gif"));
 
-        $this->assertFalse($regExp->test("4000_99_f.gif"));
-        $this->assertFalse($regExp->test("4000_09_frogt.pdf"));
-        $this->assertFalse($regExp->test("2015_05_thisnameistoolong.jpg"));
+        $this->assertFalse($regExp->matches("4000_99_f.gif"));
+        $this->assertFalse($regExp->matches("4000_09_frogt.pdf"));
+        $this->assertFalse($regExp->matches("2015_05_thisnameistoolong.jpg"));
 
     }
 
@@ -65,15 +65,15 @@ class UsageExamplesTest extends \PHPUnit_Framework_TestCase
             ->orFind($b)
             ->getRegExp();
 
-        $this->assertTrue($regExp->test("123.pdf"));
-        $this->assertTrue($regExp->test("456.doc"));
-        $this->assertTrue($regExp->test("bbbb.jpg"));
-        $this->assertTrue($regExp->test("aaaa.jpg"));
+        $this->assertTrue($regExp->matches("123.pdf"));
+        $this->assertTrue($regExp->matches("456.doc"));
+        $this->assertTrue($regExp->matches("bbbb.jpg"));
+        $this->assertTrue($regExp->matches("aaaa.jpg"));
 
-        $this->assertFalse($regExp->test("1234.pdf"));
-        $this->assertFalse($regExp->test("123.gif"));
-        $this->assertFalse($regExp->test("aaaaa.jpg"));
-        $this->assertFalse($regExp->test("456.docx"));
+        $this->assertFalse($regExp->matches("1234.pdf"));
+        $this->assertFalse($regExp->matches("123.gif"));
+        $this->assertFalse($regExp->matches("aaaaa.jpg"));
+        $this->assertFalse($regExp->matches("456.docx"));
 
     }
 
