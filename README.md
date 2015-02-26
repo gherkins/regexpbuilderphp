@@ -79,7 +79,7 @@ magna aliquyam erat, sed diam voluptua. At vero eos et accusam
 et justo duo dolores et ea rebum. doc_04.pdf Stet clita kasd File.doc.
 EOF;
 
-$matches = $regExp->exec($text);
+$matches = $regExp->findIn($text);
 
 //true
 ($matches[0] === "SomeFile.pdf");

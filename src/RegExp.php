@@ -87,17 +87,9 @@ class RegExp
         );
     }
 
-    /**
-     *
-     * alias for find()
-     *
-     * @deprecated
-     * @param $haystack
-     * @return array
-     */
     public function exec($haystack)
     {
-        return $this->find($haystack);
+        return $this->findIn($haystack);
     }
 
     /**
@@ -106,7 +98,7 @@ class RegExp
      * @param $haystack
      * @return array
      */
-    public function find($haystack)
+    public function findIn($haystack)
     {
         $matches = array();
         call_user_func_array(

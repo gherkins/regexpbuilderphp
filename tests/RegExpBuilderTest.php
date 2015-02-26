@@ -825,7 +825,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->exactly(2)->of("p")
             ->getRegExp();
 
-        $matches = $regEx->exec("pprrrrpprrpp");
+        $matches = $regEx->findIn("pprrrrpprrpp");
         $this->assertTrue($matches[0] == "pprrrrpp");
     }
 
@@ -865,7 +865,7 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
             ->exactly(1)->from(array("p", "q", "r"))
             ->getRegExp();
 
-        $matches = $regEx->exec("pdartq");
+        $matches = $regEx->findIn("pdartq");
         $this->assertTrue($matches[1] == "dart");
     }
 
@@ -902,7 +902,10 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
 
         //check deprecated alias methods
         $this->assertTrue($regEx->test("A24"));
-        $this->assertArrayHasKey(0, $regEx->exec("A24"));
+        $this->assertTrue($regEx->matches("A24"));
+
+        $this->assertArrayHasKey(0, $regEx->exec("A45"));
+        $this->assertArrayHasKey(0, $regEx->findIn("A45"));
 
     }
 
