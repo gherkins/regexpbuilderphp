@@ -91,6 +91,7 @@ class RegExp
      *
      * alias for find()
      *
+     * @deprecated
      * @param $haystack
      * @return array
      */

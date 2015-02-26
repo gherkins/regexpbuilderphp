@@ -893,4 +893,17 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($regEx->matches("123/ab"));
     }
 
+    public function testAlias()
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->upperCaseLetter()
+            ->getRegExp();
+
+        //check deprecated alias methods
+        $this->assertTrue($regEx->test("A24"));
+        $this->assertArrayHasKey(0, $regEx->exec("A24"));
+
+    }
+
 }
