@@ -81,6 +81,10 @@ class RegExpBuilder
      */
     protected $_capture;
 
+    /**
+     * @var string
+     */
+    protected $_captureName;
 
     public function __construct()
     {
@@ -109,7 +113,7 @@ class RegExpBuilder
     {
         if ($this->_of != "" || $this->_ofAny || $this->_ofGroup > 0 || $this->_from != "" || $this->_notFrom != "" || $this->_like != "") {
             $captureLiteral   = $this->_capture
-                ? $this->_captureName ? "?P<".$this->_captureName.">" : "?:"
+                ? $this->_captureName ? "?P<".$this->_captureName.">" : ""
                 : "?:";
             $quantityLiteral  = $this->getQuantityLiteral();
             $characterLiteral = $this->getCharacterLiteral();
