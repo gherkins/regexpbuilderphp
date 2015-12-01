@@ -482,6 +482,11 @@ class RegExpBuilder
         return $this->min(0)->ofAny();
     }
 
+    public function something()
+    {
+        return $this->min(1)->ofAny();
+    }
+    
     /**
      * @return $this
      */
