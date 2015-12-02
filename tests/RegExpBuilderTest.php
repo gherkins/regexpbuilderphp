@@ -767,6 +767,18 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
 
     }
 
+    public function testNamedGroup()
+    {
+        $regEx = $this->r
+            ->exactly(3)->digits()->asGroup("numbers")
+            ->getRegExp();
+
+        $res = $regEx->findIn("hello-123-abc");
+
+        $this->assertTrue(array_key_exists("numbers", $res));
+
+    }
+
     public function testFrom()
     {
         $regEx = $this->r
