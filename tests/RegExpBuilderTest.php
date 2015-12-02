@@ -893,6 +893,17 @@ class RegExpBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($regEx->matches("123/ab"));
     }
 
+    public function testSomething()
+    {
+        $regEx = $this->r
+            ->min(1)->max(3)->of("p")
+            ->something()
+            ->getRegExp();
+
+        $this->assertTrue($regEx->matches("pphelloq"));
+        $this->assertFalse($regEx->matches("p"));
+    }
+
     public function testAlias()
     {
         $regEx = $this->r
