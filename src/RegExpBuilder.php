@@ -81,6 +81,10 @@ class RegExpBuilder
      */
     protected $_capture;
 
+    /**
+     * @var string
+     */
+    protected $_captureName;
 
     public function __construct()
     {
@@ -108,7 +112,9 @@ class RegExpBuilder
     private function flushState()
     {
         if ($this->_of != "" || $this->_ofAny || $this->_ofGroup > 0 || $this->_from != "" || $this->_notFrom != "" || $this->_like != "") {
-            $captureLiteral   = $this->_capture ? "" : "?:";
+            $captureLiteral   = $this->_capture
+                ? $this->_captureName ? "?P<".$this->_captureName.">" : ""
+                : "?:";
             $quantityLiteral  = $this->getQuantityLiteral();
             $characterLiteral = $this->getCharacterLiteral();
             $reluctantLiteral = $this->_reluctant ? "?" : "";
@@ -430,9 +436,10 @@ class RegExpBuilder
         return $this;
     }
 
-    public function asGroup()
+    public function asGroup($name = null)
     {
         $this->_capture = true;
+        $this->_captureName = $name;
         $this->_groupsUsed++;
 
         return $this;
@@ -665,4 +672,3 @@ class RegExpBuilder
     }
 
 }
-
