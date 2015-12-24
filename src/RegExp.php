@@ -18,12 +18,18 @@ class RegExp
     /**
      * @var String
      */
+    protected $_pregMatchFlags;
+
+    /**
+     * @var String
+     */
     protected $_method = "preg_match";
 
-    public function __construct($expr, $flags)
+    public function __construct($expr, $flags, $pregMatchFlags = null)
     {
         $this->_expr  = $expr;
         $this->_flags = $flags;
+        $this->_pregMatchFlags = $pregMatchFlags;
 
         if (strpos($this->_flags, "g") !== false) {
             $this->_flags  = str_replace("g", "", $this->_flags);
@@ -82,7 +88,8 @@ class RegExp
             array(
                 sprintf("/%s/%s", $this->_expr, $this->_flags),
                 $string,
-                &$matches
+                &$matches,
+                $this->_pregMatchFlags ?: null,
             )
         );
     }
@@ -106,7 +113,8 @@ class RegExp
             array(
                 sprintf("/%s/%s", $this->_expr, $this->_flags),
                 $haystack,
-                &$matches
+                &$matches,
+                $this->_pregMatchFlags ?: null,
             )
         );
 

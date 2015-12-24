@@ -17,6 +17,11 @@ class RegExpBuilder
     protected $_flags = "";
 
     /**
+     * @var string
+     */
+    protected $_pregMatchFlags = "";
+
+    /**
      * @var array
      */
     protected $_literal = array();
@@ -199,7 +204,7 @@ class RegExpBuilder
     {
         $this->flushState();
 
-        return new RegExp(join("", $this->_literal), $this->_flags);
+        return new RegExp(join("", $this->_literal), $this->_flags, $this->_pregMatchFlags);
     }
 
     private function addFlag($flag)
@@ -210,7 +215,6 @@ class RegExpBuilder
 
         return $this;
     }
-
 
     public function ignoreCase()
     {
@@ -228,6 +232,13 @@ class RegExpBuilder
         return $this->addFlag("g");
     }
 
+    public function pregMatchFlags($flags)
+    {
+        $this->_pregMatchFlags = $flags;
+
+        return $this;
+    }
+    
     public function startOfInput()
     {
         $this->_literal[] = "(?:^)";
