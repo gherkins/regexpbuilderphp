@@ -130,4 +130,43 @@ EOF;
 
     }
 
+    public function testPregMatchFlags()
+    {
+        $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
+
+        $regExp = $builder
+            ->multiLine()
+            ->globalMatch()
+            ->min(1)->max(10)->anythingBut(" ")
+            ->anyOf(array(".pdf", ".doc"))
+            ->pregMatchFlags(PREG_OFFSET_CAPTURE)
+            ->getRegExp();
+
+        $text = <<<EOF
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+sed diam nonumy SomeFile.pdf eirmod tempor invidunt ut labore et dolore
+magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+et justo duo dolores et ea rebum. doc_04.pdf Stet clita kasd gubergren,
+no sea takimata sanctus est Lorem ipsum dolor sit amet.
+Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+sed diam nonumy eirmod tempor invidunt ut File.doc labore et
+dolore magna aliquyam erat, sed diam voluptua.
+EOF;
+
+        $matches = $regExp->exec($text);
+
+        $this->assertTrue(is_array($matches[0]));
+        $this->assertTrue($matches[0][0] === "SomeFile.pdf");
+        $this->assertTrue($matches[0][1] === 73);
+
+        $this->assertTrue(is_array($matches[1]));
+        $this->assertTrue($matches[1][0] === "doc_04.pdf");
+        $this->assertTrue($matches[1][1] === 226);
+
+        $this->assertTrue(is_array($matches[2]));
+        $this->assertTrue($matches[2][0] === "File.doc");
+        $this->assertTrue($matches[2][1] === 419);
+
+    }
+
 }
