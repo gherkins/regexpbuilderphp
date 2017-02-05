@@ -14,7 +14,8 @@ before_script:
 
 script:
   - mkdir -p build/logs
-  - phpunit --coverage-clover build/logs/clover.xml
-
+  - if [[ $TRAVIS_PHP_VERSION = '7.1' ]]; then phpunit --coverage-clover build/logs/clover.xml fi
+  
 after_script:
- - php vendor/bin/coveralls -v
+ - if [[ $TRAVIS_PHP_VERSION = '7.1' ]]; then php vendor/bin/coveralls -v fi
+  
