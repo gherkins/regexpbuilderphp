@@ -1,8 +1,9 @@
 language: php
 
 env:
-  - COVERAGE_PHP_VERSION=7.1
-  - PHPUNIT_FLAGS=""
+  global:
+    - COVERAGE_PHP_VERSION=7.1
+    - PHPUNIT_FLAGS=""
 
 php:
   - 5.3
