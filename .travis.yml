@@ -1,5 +1,10 @@
 language: php
 
+env:
+  global:
+    - COVERAGE_PHP_VERSION=7.1
+    - PHPUNIT_FLAGS=""
+
 php:
   - 5.3
   - 5.4
@@ -9,12 +14,15 @@ php:
   - 7.1
 
 before_script:
+  - if [[ $TRAVIS_PHP_VERSION != $COVERAGE_PHP_VERSION ]]; then phpenv config-rm xdebug.ini; fi
   - travis_retry composer self-update
-  - travis_retry composer install --no-interaction --prefer-source --dev
+  - travis_retry composer install --no-interaction --prefer-source
 
 script:
   - mkdir -p build/logs
-  - phpunit --coverage-clover build/logs/clover.xml
-
+  - if [[ $TRAVIS_PHP_VERSION == $COVERAGE_PHP_VERSION ]]; then PHPUNIT_FLAGS="--coverage-clover build/logs/clover.xml"; fi
+  - phpunit $PHPUNIT_FLAGS
+  
 after_script:
- - php vendor/bin/coveralls -v
+ - if [[ $TRAVIS_PHP_VERSION == $COVERAGE_PHP_VERSION ]]; then php vendor/bin/coveralls -v; fi
+  
