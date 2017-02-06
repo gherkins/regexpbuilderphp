@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Gherkins\RegExpBuilderPHP;
 
@@ -37,26 +37,17 @@ class RegExp
         }
     }
 
-    /**
-     * @return String
-     */
-    public function __toString()
+    public function __toString() : string
     {
         return $this->getExpression();
     }
 
-    /**
-     * @return String
-     */
-    public function getExpression()
+    public function getExpression() : string
     {
         return $this->_expr;
     }
 
-    /**
-     * @return String
-     */
-    public function getFlags()
+    public function getFlags() : string
     {
         return $this->_flags;
     }
@@ -65,36 +56,31 @@ class RegExp
      * alias for matches
      *
      * @deprecated
-     * @param $string
-     * @return bool
      */
-    public function test($string)
+    public function test(string $string) : bool
     {
         return $this->matches($string);
     }
 
     /**
      * check string w/ preg_match
-     *
-     * @param $string
-     * @return bool
      */
-    public function matches($string)
+    public function matches(string $string) : bool
     {
-        $matches = array();
+        $matches = [];
 
         return (bool)call_user_func_array(
             $this->_method,
-            array(
+            [
                 sprintf("/%s/%s", $this->_expr, $this->_flags),
                 $string,
                 &$matches,
                 $this->_pregMatchFlags ?: null,
-            )
+            ]
         );
     }
 
-    public function exec($haystack)
+    public function exec($haystack) : array
     {
         return $this->findIn($haystack);
     }
@@ -103,19 +89,18 @@ class RegExp
      * execute preg_match, return matches
      *
      * @param $haystack
-     * @return array
      */
-    public function findIn($haystack)
+    public function findIn($haystack) : array
     {
-        $matches = array();
+        $matches = [];
         call_user_func_array(
             $this->_method,
-            array(
+            [
                 sprintf("/%s/%s", $this->_expr, $this->_flags),
                 $haystack,
                 &$matches,
                 $this->_pregMatchFlags ?: null,
-            )
+            ]
         );
 
         if (!isset($matches[1]) && isset($matches[0]) && is_array($matches[0])) {
