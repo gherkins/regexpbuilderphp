@@ -10,13 +10,13 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="RegExpBuilderTest">
+        <testsuite>
             <directory>tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist>
-            <directory suffix=".php">src/</directory>
+            <directory>src</directory>
         </whitelist>
     </filter>
 </phpunit>

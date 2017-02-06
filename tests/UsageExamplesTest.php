@@ -5,13 +5,13 @@ namespace Gherkins\RegExpBuilderPHP\Test;
 use Gherkins\RegExpBuilderPHP\RegExpBuilder;
 use PHPUnit\Framework\TestCase;
 
-class UsageExamplesTest extends TestCase
+final class UsageExamplesTest extends TestCase
 {
 
     /**
      * @var RegExpBuilder
      */
-    public $r;
+    private $r;
 
     protected function setUp()
     {
