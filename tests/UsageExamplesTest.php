@@ -1,24 +1,26 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Gherkins\RegExpBuilderPHP\Test;
 
+use Gherkins\RegExpBuilderPHP\RegExpBuilder;
+use PHPUnit\Framework\TestCase;
 
-class UsageExamplesTest extends \PHPUnit_Framework_TestCase
+class UsageExamplesTest extends TestCase
 {
 
     /**
-     * @var \Gherkins\RegExpBuilderPHP\RegExpBuilder
+     * @var RegExpBuilder
      */
     public $r;
 
-    public function setUp()
+    protected function setUp()
     {
-        $this->r = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
+        $this->r = new RegExpBuilder();
     }
 
     public function testUsageExample()
     {
-        $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
+        $builder = new RegExpBuilder();
 
         $regExp = $builder
             ->startOfInput()
@@ -28,7 +30,7 @@ class UsageExamplesTest extends \PHPUnit_Framework_TestCase
             ->then("_")
             ->min(3)->max(10)->letters()
             ->then(".")
-            ->anyOf(array("png", "jpg", "gif"))
+            ->anyOf(["png", "jpg", "gif"])
             ->endOfInput()
             ->getRegExp();
 
@@ -44,12 +46,12 @@ class UsageExamplesTest extends \PHPUnit_Framework_TestCase
 
     public function testUsageExample2()
     {
-        $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
+        $builder = new RegExpBuilder();
 
         $a = $builder
             ->startOfInput()
             ->exactly(3)->digits()
-            ->anyOf(array(".pdf", ".doc"))
+            ->anyOf([".pdf", ".doc"])
             ->endOfInput();
 
         $b = $builder
@@ -79,13 +81,13 @@ class UsageExamplesTest extends \PHPUnit_Framework_TestCase
 
     public function testUsageExample3()
     {
-        $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
+        $builder = new RegExpBuilder();
 
         $regExp = $builder
             ->multiLine()
             ->globalMatch()
             ->min(1)->max(10)->anythingBut(" ")
-            ->anyOf(array(".pdf", ".doc"))
+            ->anyOf([".pdf", ".doc"])
             ->getRegExp();
 
         $text = <<<EOF
@@ -104,12 +106,11 @@ EOF;
         $this->assertTrue($matches[0] === "SomeFile.pdf");
         $this->assertTrue($matches[1] === "doc_04.pdf");
         $this->assertTrue($matches[2] === "File.doc");
-
     }
 
     public function testReplace()
     {
-        $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
+        $builder = new RegExpBuilder();
 
         $regExp = $builder
             ->min(1)
@@ -127,18 +128,17 @@ EOF;
         );
 
         $this->assertTrue("99 bottles of beer on the wall" === $text);
-
     }
 
     public function testPregMatchFlags()
     {
-        $builder = new \Gherkins\RegExpBuilderPHP\RegExpBuilder();
+        $builder = new RegExpBuilder();
 
         $regExp = $builder
             ->multiLine()
             ->globalMatch()
             ->min(1)->max(10)->anythingBut(" ")
-            ->anyOf(array(".pdf", ".doc"))
+            ->anyOf([".pdf", ".doc"])
             ->pregMatchFlags(PREG_OFFSET_CAPTURE)
             ->getRegExp();
 
@@ -166,7 +166,6 @@ EOF;
         $this->assertTrue(is_array($matches[2]));
         $this->assertTrue($matches[2][0] === "File.doc");
         $this->assertTrue($matches[2][1] === 419);
-
     }
 
 }
