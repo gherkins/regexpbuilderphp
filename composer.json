@@ -1,18 +1,15 @@
 {
   "name": "gherkins/regexpbuilderphp",
   "description": "PHP port of thebinarysearchtree/regexpbuilderjs",
-  "keywords": [
-    "php",
-    "regex",
-    "builder"
-  ],
+  "keywords": ["php", "regex", "builder"],
   "homepage": "https://github.com/gherkins/regexpbuilderphp/",
   "license": "MIT",
   "require": {
-    "php": ">=5.3.0"
+    "php": "^7.0"
   },
   "require-dev": {
-    "satooshi/php-coveralls": "1.0.*"
+    "satooshi/php-coveralls": "1.0.*",
+    "phpunit/phpunit": "^6.0"
   },
   "autoload": {
     "psr-4": {
