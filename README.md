@@ -9,7 +9,6 @@
 ## human-readable regular expressions for PHP 5.3+
 [![Travis](https://img.shields.io/travis/gherkins/regexpbuilderphp.svg?style=flat-square)](https://travis-ci.org/gherkins/regexpbuilderphp)
 [![Coveralls](https://img.shields.io/coveralls/gherkins/regexpbuilderphp.svg?style=flat-square)](https://coveralls.io/r/gherkins/regexpbuilderphp?branch=master)
-[![SensioLabs Insight](https://img.shields.io/sensiolabs/i/555ad19b-0c18-4434-ad43-5b19779e2e9c.svg?style=flat-square)](https://insight.sensiolabs.com/projects/555ad19b-0c18-4434-ad43-5b19779e2e9c)
 [![release](https://img.shields.io/github/release/gherkins/regexpbuilderphp.svg?style=flat-square)](https://github.com/gherkins/regexpbuilderphp/releases)
 
 PHP port of https://github.com/thebinarysearchtree/regexpbuilderjs
@@ -18,10 +17,16 @@ PHP port of https://github.com/thebinarysearchtree/regexpbuilderjs
 
 ## Installation
 
+PHP7
 ```bash
-composer require gherkins/regexpbuilderphp
+composer req gherkins/regexpbuilderphp
 ```
-Or download [the latest release](https://github.com/gherkins/regexpbuilderphp/releases/latest) and require `RegExpBuilder.php` and `RegExp.php` from `/src`.
+PHP5
+```bash
+composer req gherkins/regexpbuilderphp:0.7.*
+```
+
+Or download [the appropriate release](https://github.com/gherkins/regexpbuilderphp/releases/latest) and require `RegExpBuilder.php` and `RegExp.php` from `/src`.
 
 
 ## Documentation
