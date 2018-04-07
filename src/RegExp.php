@@ -90,7 +90,7 @@ class RegExp
      *
      * @param $haystack
      */
-    public function findIn($haystack) : array
+    public function findIn($haystack)
     {
         $matches = [];
         call_user_func_array(
@@ -103,7 +103,7 @@ class RegExp
             ]
         );
 
-        if (!isset($matches[1]) && isset($matches[0]) && is_array($matches[0])) {
+        if (!isset($matches[1]) && isset($matches[0]) && !is_array($matches[0])) {
             return $matches[0];
         }
 
