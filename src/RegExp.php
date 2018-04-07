@@ -103,8 +103,8 @@ class RegExp
             ]
         );
 
-        if (!isset($matches[1]) && isset($matches[0]) && !is_array($matches[0])) {
-            return $matches[0];
+        if (count($matches) ==1) {
+            return current($matches);
         }
 
         return $matches;
