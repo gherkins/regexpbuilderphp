@@ -21,10 +21,6 @@ PHP7
 ```bash
 composer req gherkins/regexpbuilderphp
 ```
-PHP5
-```bash
-composer req gherkins/regexpbuilderphp:0.7.*
-```
 
 Or download [the appropriate release](https://github.com/gherkins/regexpbuilderphp/releases/latest) and require `RegExpBuilder.php` and `RegExp.php` from `/src`.
 
