@@ -17,7 +17,6 @@ PHP port of https://github.com/thebinarysearchtree/regexpbuilderjs
 
 ## Installation
 
-PHP7
 ```bash
 composer req gherkins/regexpbuilderphp
 ```
