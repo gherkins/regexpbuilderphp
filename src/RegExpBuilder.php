@@ -182,7 +182,6 @@ class RegExpBuilder
 
     private function incrementGroupNumbering($literal, $increment)
     {
-
         if ($increment > 0) {
             $literal = preg_replace_callback(
                 '/\\\(\d+)/',
@@ -286,7 +285,6 @@ class RegExpBuilder
 
     public function orFind($r) : RegExpBuilder
     {
-
         if (is_string($r)) {
             return $this->setOr($this->getNew()->exactly(1)->of($r));
         }
@@ -331,7 +329,6 @@ class RegExpBuilder
 
     public function neither($r) : RegExpBuilder
     {
-
         if (is_string($r)) {
             return $this->notAhead($this->getNew()->exactly(1)->of($r));
         }
@@ -577,7 +574,6 @@ class RegExpBuilder
 
     public function digits() : RegExpBuilder
     {
-
         return $this->like($this->getNew()->digit());
     }
 
@@ -676,5 +672,4 @@ class RegExpBuilder
 
         return new $class;
     }
-
 }
