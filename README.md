@@ -11,7 +11,7 @@
 [![Coveralls](https://img.shields.io/coveralls/gherkins/regexpbuilderphp.svg?style=flat-square)](https://coveralls.io/r/gherkins/regexpbuilderphp?branch=master)
 [![release](https://img.shields.io/github/release/gherkins/regexpbuilderphp.svg?style=flat-square)](https://github.com/gherkins/regexpbuilderphp/releases)
 
-PHP port of https://github.com/thebinarysearchtree/regexpbuilderjs
+PHP port of `regexpbuilderjs`
 
 > RegExpBuilder integrates regular expressions into the programming language, thereby making them easy to read and maintain. Regular Expressions are created by using chained methods and variables such as arrays or strings.
 
@@ -72,12 +72,10 @@ $regExp = $builder
     ->anyOf(array(".pdf", ".doc"))
     ->getRegExp();
 
-$text = <<<EOF
-Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+$text = 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
 sed diam nonumy SomeFile.pdf eirmod tempor invidunt ut labore et dolore
 magna aliquyam erat, sed diam voluptua. At vero eos et accusam
-et justo duo dolores et ea rebum. doc_04.pdf Stet clita kasd File.doc.
-EOF;
+et justo duo dolores et ea rebum. doc_04.pdf Stet clita kasd File.doc.'
 
 $matches = $regExp->findIn($text);
 
