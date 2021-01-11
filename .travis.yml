@@ -1,5 +1,9 @@
 language: php
 
+env:
+  global:
+    - XDEBUG_MODE=coverage
+
 php:
   - 7.3
   - 7.4
