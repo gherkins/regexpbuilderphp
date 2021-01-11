@@ -13,7 +13,7 @@ final class UsageExamplesTest extends TestCase
      */
     private $r;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->r = new RegExpBuilder();
     }
