@@ -5,7 +5,7 @@ namespace Gherkins\RegExpBuilderPHP\Test;
 use Gherkins\RegExpBuilderPHP\RegExpBuilder;
 use PHPUnit\Framework\TestCase;
 
-final class RegExpBuiferTest extends TestCase
+final class RegExpBuilderTest extends TestCase
 {
 
     /**
@@ -13,7 +13,7 @@ final class RegExpBuiferTest extends TestCase
      */
     private $r;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->r = new RegExpBuilder();
     }
