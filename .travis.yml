@@ -5,9 +5,9 @@ env:
     - XDEBUG_MODE=coverage
 
 php:
-  - 7.3
   - 7.4
   - 8.0
+  - 8.1
 
 before_script:
   - travis_retry composer self-update
