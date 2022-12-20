@@ -16,7 +16,7 @@ class RegExp
     protected $_flags;
 
     /**
-     * @var String
+     * @var int
      */
     protected $_pregMatchFlags;
 
@@ -25,7 +25,7 @@ class RegExp
      */
     protected $_method = "preg_match";
 
-    public function __construct($expr, $flags, $pregMatchFlags = null)
+    public function __construct($expr, $flags, $pregMatchFlags = 0)
     {
         $this->_expr  = $expr;
         $this->_flags = $flags;
@@ -75,7 +75,7 @@ class RegExp
                 sprintf("/%s/%s", $this->_expr, $this->_flags),
                 $string,
                 &$matches,
-                $this->_pregMatchFlags ?: null,
+                $this->_pregMatchFlags ?: 0,
             ]
         );
     }
@@ -99,7 +99,7 @@ class RegExp
                 sprintf("/%s/%s", $this->_expr, $this->_flags),
                 $haystack,
                 &$matches,
-                $this->_pregMatchFlags ?: null,
+                $this->_pregMatchFlags ?: 0,
             ]
         );
 
