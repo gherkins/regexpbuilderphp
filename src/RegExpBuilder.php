@@ -11,7 +11,7 @@ class RegExpBuilder
     protected $_flags = "";
 
     /**
-     * @var string
+     * @var int
      */
     protected $_pregMatchFlags = "";
 
@@ -201,7 +201,7 @@ class RegExpBuilder
     {
         $this->flushState();
 
-        return new RegExp(implode("", $this->_literal), $this->_flags, $this->_pregMatchFlags);
+        return new RegExp(implode("", $this->_literal), $this->_flags, (int)$this->_pregMatchFlags);
     }
 
     private function addFlag($flag)
