@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1672348063">
-  <project timestamp="1672348063">
+<coverage generated="1672348201">
+  <project timestamp="1672348201">
     <file name="/home/runner/work/regexpbuilderphp/regexpbuilderphp/src/RegExp.php">
       <class name="Gherkins\RegExpBuilderPHP\RegExp" namespace="global">
         <metrics complexity="15" methods="9" coveredmethods="9" conditionals="0" coveredconditionals="0" statements="41" coveredstatements="41" elements="50" coveredelements="50"/>
