@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  build:
+  phpunit:
 
     runs-on: ubuntu-22.04
     strategy:
