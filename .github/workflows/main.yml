@@ -1,4 +1,4 @@
-name: PHP ${{ matrix.php-versions }}
+name: phpunit
 
 on:
   push:
