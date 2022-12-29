@@ -8,7 +8,7 @@
 ```
 ## human-readable regular expressions for PHP
 [![release](https://img.shields.io/github/release/gherkins/regexpbuilderphp.svg?style=flat-square)](https://github.com/gherkins/regexpbuilderphp/releases)
-![example workflow](https://github.com/gherkins/regexpbuilderphp/actions/workflows/main.yml/badge.svg)
+[![example workflow](https://github.com/gherkins/regexpbuilderphp/actions/workflows/main.yml/badge.svg)](https://github.com/gherkins/regexpbuilderphp/actions)
 
 PHP port of `regexpbuilderjs`
 
