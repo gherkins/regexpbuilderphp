@@ -40,6 +40,10 @@ jobs:
       - name: Run test suite
         run: composer run-script test
 
+  coverage-badge:
+    needs: phpunit
+    runs-on: ubuntu-22.04
+    steps:
       - name: phpunit-coverage-badge
         uses: timkrase/phpunit-coverage-badge@v1.2.0
         with:
