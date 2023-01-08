@@ -1,10 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Gherkins\RegExpBuilderPHP;
 
 class RegExpBuilder
 {
-
     protected string $_flags = "";
 
     protected ?int $_pregMatchFlags = null;
@@ -74,7 +75,7 @@ class RegExpBuilder
         }
     }
 
-    private function getQuantityLiteral() : string
+    private function getQuantityLiteral(): string
     {
         if ($this->_min != -1) {
             if ($this->_max != -1) {
@@ -117,7 +118,7 @@ class RegExpBuilder
         // @codeCoverageIgnoreEnd
     }
 
-    public function getLiteral() : string
+    public function getLiteral(): string
     {
         $this->flushState();
 
@@ -149,7 +150,7 @@ class RegExpBuilder
         return $literal;
     }
 
-    public function getRegExp() : RegExp
+    public function getRegExp(): RegExp
     {
         $this->flushState();
 
@@ -165,44 +166,44 @@ class RegExpBuilder
         return $this;
     }
 
-    public function ignoreCase() : RegExpBuilder
+    public function ignoreCase(): RegExpBuilder
     {
         return $this->addFlag("i");
     }
 
 
-    public function multiLine() : RegExpBuilder
+    public function multiLine(): RegExpBuilder
     {
         return $this->addFlag("m");
     }
 
-    public function globalMatch() : RegExpBuilder
+    public function globalMatch(): RegExpBuilder
     {
         return $this->addFlag("g");
     }
 
-    public function pregMatchFlags(int $flags) : RegExpBuilder
+    public function pregMatchFlags(int $flags): RegExpBuilder
     {
         $this->_pregMatchFlags = $flags;
 
         return $this;
     }
 
-    public function startOfInput() : RegExpBuilder
+    public function startOfInput(): RegExpBuilder
     {
         $this->_literal[] = "(?:^)";
 
         return $this;
     }
 
-    public function startOfLine() : RegExpBuilder
+    public function startOfLine(): RegExpBuilder
     {
         $this->multiLine();
 
         return $this->startOfInput();
     }
 
-    public function endOfInput() : RegExpBuilder
+    public function endOfInput(): RegExpBuilder
     {
         $this->flushState();
         $this->_literal[] = "(?:$)";
@@ -210,7 +211,7 @@ class RegExpBuilder
         return $this;
     }
 
-    public function endOfLine() : RegExpBuilder
+    public function endOfLine(): RegExpBuilder
     {
         $this->multiLine();
 
@@ -220,7 +221,7 @@ class RegExpBuilder
     /**
      * @param string|RegExpBuilder $r
      */
-    public function eitherFind(mixed $r) : RegExpBuilder
+    public function eitherFind(mixed $r): RegExpBuilder
     {
         if (is_string($r)) {
             return $this->setEither($this->getNew()->exactly(1)->of($r));
@@ -241,7 +242,7 @@ class RegExpBuilder
     /**
      * @param string|RegExpBuilder $r
      */
-    public function orFind(mixed $r) : RegExpBuilder
+    public function orFind(mixed $r): RegExpBuilder
     {
         if (is_string($r)) {
             return $this->setOr($this->getNew()->exactly(1)->of($r));
@@ -253,7 +254,7 @@ class RegExpBuilder
     /**
      * @param array<int, string|RegExpBuilder> $r
      */
-    public function anyOf(array $r) : RegExpBuilder
+    public function anyOf(array $r): RegExpBuilder
     {
         if (count($r) < 1) {
             return $this;
@@ -269,7 +270,7 @@ class RegExpBuilder
         return $this;
     }
 
-    private function setOr(RegExpBuilder $r) : RegExpBuilder
+    private function setOr(RegExpBuilder $r): RegExpBuilder
     {
         $either = $this->_either;
         $or     = $this->combineGroupNumberingAndGetLiteralral($r);
@@ -290,7 +291,7 @@ class RegExpBuilder
     /**
      * @param string|RegExpBuilder $r
      */
-    public function neither(mixed $r) : RegExpBuilder
+    public function neither(mixed $r): RegExpBuilder
     {
         if (is_string($r)) {
             return $this->notAhead($this->getNew()->exactly(1)->of($r));
@@ -302,7 +303,7 @@ class RegExpBuilder
     /**
      * @param string|RegExpBuilder $r
      */
-    public function nor(mixed $r) : RegExpBuilder
+    public function nor(mixed $r): RegExpBuilder
     {
         if ($this->_min == 0 && $this->_ofAny) {
             $this->_min   = -1;
@@ -313,7 +314,7 @@ class RegExpBuilder
         return $this->min(0)->ofAny();
     }
 
-    public function exactly(int $n) : RegExpBuilder
+    public function exactly(int $n): RegExpBuilder
     {
         $this->flushState();
         $this->_min = $n;
@@ -322,7 +323,7 @@ class RegExpBuilder
         return $this;
     }
 
-    public function min(int $n) : RegExpBuilder
+    public function min(int $n): RegExpBuilder
     {
         $this->flushState();
         $this->_min = $n;
@@ -330,7 +331,7 @@ class RegExpBuilder
         return $this;
     }
 
-    public function max(int $n) : RegExpBuilder
+    public function max(int $n): RegExpBuilder
     {
         $this->flushState();
         $this->_max = $n;
@@ -338,7 +339,7 @@ class RegExpBuilder
         return $this;
     }
 
-    public function of(string $s) : RegExpBuilder
+    public function of(string $s): RegExpBuilder
     {
         $this->_of = $this->sanitize($s);
 
@@ -346,14 +347,14 @@ class RegExpBuilder
     }
 
 
-    public function ofAny() : RegExpBuilder
+    public function ofAny(): RegExpBuilder
     {
         $this->_ofAny = true;
 
         return $this;
     }
 
-    public function ofGroup(int $n) : RegExpBuilder
+    public function ofGroup(int $n): RegExpBuilder
     {
         $this->_ofGroup = $n;
 
@@ -363,7 +364,7 @@ class RegExpBuilder
     /**
      * @param array<int, string> $s
      */
-    public function from(array $s) : RegExpBuilder
+    public function from(array $s): RegExpBuilder
     {
         $this->_from = $this->sanitize(join("", $s));
 
@@ -373,14 +374,14 @@ class RegExpBuilder
     /**
      * @param array<int, string> $s
      */
-    public function notFrom(array $s) : RegExpBuilder
+    public function notFrom(array $s): RegExpBuilder
     {
         $this->_notFrom = $this->sanitize(join("", $s));
 
         return $this;
     }
 
-    public function like(RegExpBuilder $r) : RegExpBuilder
+    public function like(RegExpBuilder $r): RegExpBuilder
     {
         $this->_like = $this->combineGroupNumberingAndGetLiteralral($r);
 
@@ -388,7 +389,7 @@ class RegExpBuilder
     }
 
 
-    public function reluctantly() : RegExpBuilder
+    public function reluctantly(): RegExpBuilder
     {
         $this->_reluctant = true;
 
@@ -396,7 +397,7 @@ class RegExpBuilder
     }
 
 
-    public function ahead(RegExpBuilder $r) : RegExpBuilder
+    public function ahead(RegExpBuilder $r): RegExpBuilder
     {
         $this->flushState();
         $this->_literal[] = "(?=" . $this->combineGroupNumberingAndGetLiteralral($r) . ")";
@@ -405,7 +406,7 @@ class RegExpBuilder
     }
 
 
-    public function notAhead(RegExpBuilder $r) : RegExpBuilder
+    public function notAhead(RegExpBuilder $r): RegExpBuilder
     {
         $this->flushState();
         $this->_literal[] = "(?!" . $this->combineGroupNumberingAndGetLiteralral($r) . ")";
@@ -413,7 +414,7 @@ class RegExpBuilder
         return $this;
     }
 
-    public function asGroup(string $name = null) : RegExpBuilder
+    public function asGroup(string $name = null): RegExpBuilder
     {
         $this->_capture = true;
         $this->_captureName = $name;
@@ -423,12 +424,12 @@ class RegExpBuilder
     }
 
 
-    public function then(string $s) : RegExpBuilder
+    public function then(string $s): RegExpBuilder
     {
         return $this->exactly(1)->of($s);
     }
 
-    public function find(string $s) : RegExpBuilder
+    public function find(string $s): RegExpBuilder
     {
         return $this->then($s);
     }
@@ -436,7 +437,7 @@ class RegExpBuilder
     /**
      * @param array<int, string> $s
      */
-    public function some(array $s) : RegExpBuilder
+    public function some(array $s): RegExpBuilder
     {
         return $this->min(1)->from($s);
     }
@@ -444,22 +445,22 @@ class RegExpBuilder
     /**
      * @param array<int, string> $s
      */
-    public function maybeSome(array $s) : RegExpBuilder
+    public function maybeSome(array $s): RegExpBuilder
     {
         return $this->min(0)->from($s);
     }
 
-    public function maybe(string $s) : RegExpBuilder
+    public function maybe(string $s): RegExpBuilder
     {
         return $this->max(1)->of($s);
     }
 
-    public function anything() : RegExpBuilder
+    public function anything(): RegExpBuilder
     {
         return $this->min(0)->ofAny();
     }
 
-    public function anythingBut(string $s) : RegExpBuilder
+    public function anythingBut(string $s): RegExpBuilder
     {
         if (strlen($s) === 1) {
             return $this->min(1)->notFrom([$s]);
@@ -469,18 +470,18 @@ class RegExpBuilder
         return $this->min(0)->ofAny();
     }
 
-    public function something() : RegExpBuilder
+    public function something(): RegExpBuilder
     {
         return $this->min(1)->ofAny();
     }
 
 
-    public function any() : RegExpBuilder
+    public function any(): RegExpBuilder
     {
         return $this->exactly(1)->ofAny();
     }
 
-    public function lineBreak() : RegExpBuilder
+    public function lineBreak(): RegExpBuilder
     {
         $this->flushState();
         $this->_literal[] = "(?:\\r\\n|\\r|\\n)";
@@ -488,13 +489,13 @@ class RegExpBuilder
         return $this;
     }
 
-    public function lineBreaks() : RegExpBuilder
+    public function lineBreaks(): RegExpBuilder
     {
         return $this->like($this->getNew()->lineBreak());
     }
 
 
-    public function whitespace() : RegExpBuilder
+    public function whitespace(): RegExpBuilder
     {
         if ($this->_min == -1 && $this->_max == -1) {
             $this->flushState();
@@ -507,7 +508,7 @@ class RegExpBuilder
         return $this;
     }
 
-    public function notWhitespace() : RegExpBuilder
+    public function notWhitespace(): RegExpBuilder
     {
         if ($this->_min == -1 && $this->_max == -1) {
             $this->flushState();
@@ -520,7 +521,7 @@ class RegExpBuilder
         return $this;
     }
 
-    public function tab() : RegExpBuilder
+    public function tab(): RegExpBuilder
     {
         $this->flushState();
         $this->_literal[] = "(?:\\t)";
@@ -528,12 +529,12 @@ class RegExpBuilder
         return $this;
     }
 
-    public function tabs() : RegExpBuilder
+    public function tabs(): RegExpBuilder
     {
         return $this->like($this->getNew()->tab());
     }
 
-    public function digit() : RegExpBuilder
+    public function digit(): RegExpBuilder
     {
         $this->flushState();
         $this->_literal[] = "(?:\\d)";
@@ -542,7 +543,7 @@ class RegExpBuilder
     }
 
 
-    public function notDigit() : RegExpBuilder
+    public function notDigit(): RegExpBuilder
     {
         $this->flushState();
         $this->_literal[] = "(?:\\D)";
@@ -550,17 +551,17 @@ class RegExpBuilder
         return $this;
     }
 
-    public function digits() : RegExpBuilder
+    public function digits(): RegExpBuilder
     {
         return $this->like($this->getNew()->digit());
     }
 
-    public function notDigits() : RegExpBuilder
+    public function notDigits(): RegExpBuilder
     {
         return $this->like($this->getNew()->notDigit());
     }
 
-    public function letter() : RegExpBuilder
+    public function letter(): RegExpBuilder
     {
         $this->exactly(1);
         $this->_from = "A-Za-z";
@@ -568,7 +569,7 @@ class RegExpBuilder
         return $this;
     }
 
-    public function notLetter() : RegExpBuilder
+    public function notLetter(): RegExpBuilder
     {
         $this->exactly(1);
         $this->_notFrom = "A-Za-z";
@@ -576,21 +577,21 @@ class RegExpBuilder
         return $this;
     }
 
-    public function letters() : RegExpBuilder
+    public function letters(): RegExpBuilder
     {
         $this->_from = "A-Za-z";
 
         return $this;
     }
 
-    public function notLetters() : RegExpBuilder
+    public function notLetters(): RegExpBuilder
     {
         $this->_notFrom = "A-Za-z";
 
         return $this;
     }
 
-    public function lowerCaseLetter() : RegExpBuilder
+    public function lowerCaseLetter(): RegExpBuilder
     {
         $this->exactly(1);
         $this->_from = "a-z";
@@ -598,14 +599,14 @@ class RegExpBuilder
         return $this;
     }
 
-    public function lowerCaseLetters() : RegExpBuilder
+    public function lowerCaseLetters(): RegExpBuilder
     {
         $this->_from = "a-z";
 
         return $this;
     }
 
-    public function upperCaseLetter() : RegExpBuilder
+    public function upperCaseLetter(): RegExpBuilder
     {
         $this->exactly(1);
         $this->_from = "A-Z";
@@ -613,14 +614,14 @@ class RegExpBuilder
         return $this;
     }
 
-    public function upperCaseLetters() : RegExpBuilder
+    public function upperCaseLetters(): RegExpBuilder
     {
         $this->_from = "A-Z";
 
         return $this;
     }
 
-    public function append(RegExpBuilder $r) : RegExpBuilder
+    public function append(RegExpBuilder $r): RegExpBuilder
     {
         $this->exactly(1);
         $this->_like = $this->combineGroupNumberingAndGetLiteralral($r);
@@ -628,7 +629,7 @@ class RegExpBuilder
         return $this;
     }
 
-    public function optional(RegExpBuilder $r) : RegExpBuilder
+    public function optional(RegExpBuilder $r): RegExpBuilder
     {
         $this->max(1);
         $this->_like = $this->combineGroupNumberingAndGetLiteralral($r);
@@ -636,7 +637,7 @@ class RegExpBuilder
         return $this;
     }
 
-    private function sanitize(string $s) : string
+    private function sanitize(string $s): string
     {
         return preg_quote($s, "/");
     }
@@ -644,10 +645,10 @@ class RegExpBuilder
     /**
      * get a fresh instance
      */
-    public function getNew() : RegExpBuilder
+    public function getNew(): RegExpBuilder
     {
         $class = get_class($this);
 
-        return new $class;
+        return new $class();
     }
 }

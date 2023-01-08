@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Gherkins\RegExpBuilderPHP\Test;
 
@@ -7,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 
 final class RegExpBuilderTest extends TestCase
 {
-
     private RegExpBuilder $r;
 
     protected function setUp(): void
@@ -29,7 +30,6 @@ final class RegExpBuilderTest extends TestCase
 
         $this->assertTrue(is_string($regEx->__toString()));
         $this->assertTrue(is_string($regEx->getExpression()));
-
     }
 
     public function testMoney(): void
@@ -47,7 +47,6 @@ final class RegExpBuilderTest extends TestCase
 
         $this->assertFalse($regEx->matches("€8,9"));
         $this->assertFalse($regEx->matches("12.123.8,99 €"));
-
     }
 
     public function testMoney2(): void
@@ -68,7 +67,6 @@ final class RegExpBuilderTest extends TestCase
 
         $this->assertFalse($regEx->matches("€8,9"));
         $this->assertFalse($regEx->matches("12.123.8,99 €"));
-
     }
 
     public function testAllMoney(): void
@@ -158,7 +156,6 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("af24"));
         $this->assertFalse($regEx->matches("afs4"));
         $this->assertFalse($regEx->matches("234asas"));
-
     }
 
     public function testNotLetter(): void
@@ -321,7 +318,6 @@ final class RegExpBuilderTest extends TestCase
 
         $this->assertFalse($regEx->matches("milk"));
         $this->assertFalse($regEx->matches("juice"));
-
     }
 
     public function testLowerCasew(): void
@@ -393,7 +389,6 @@ final class RegExpBuilderTest extends TestCase
         $this->assertTrue($regEx->matches("a5"));
 
         $this->assertFalse($regEx->matches("5a"));
-
     }
 
     public function testTab(): void
@@ -831,7 +826,6 @@ final class RegExpBuilderTest extends TestCase
 
         $this->assertFalse($regEx->matches("dartpqr"));
         $this->assertFalse($regEx->matches("langdart"));
-
     }
 
     public function testNotAhead(): void
@@ -907,5 +901,4 @@ final class RegExpBuilderTest extends TestCase
         $this->assertArrayHasKey(0, $regEx->exec("A45"));
         $this->assertArrayHasKey(0, $regEx->findIn("A45"));
     }
-
 }

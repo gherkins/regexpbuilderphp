@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Gherkins\RegExpBuilderPHP\Test;
 
@@ -30,7 +32,6 @@ final class UsageExamplesTest extends TestCase
         $this->assertFalse($regExp->matches("4000_99_f.gif"));
         $this->assertFalse($regExp->matches("4000_09_frogt.pdf"));
         $this->assertFalse($regExp->matches("2015_05_thisnameistoolong.jpg"));
-
     }
 
     public function testUsageExample2(): void
@@ -65,7 +66,6 @@ final class UsageExamplesTest extends TestCase
         $this->assertFalse($regExp->matches("123.gif"));
         $this->assertFalse($regExp->matches("aaaaa.jpg"));
         $this->assertFalse($regExp->matches("456.docx"));
-
     }
 
     public function testUsageExample3(): void
@@ -156,5 +156,4 @@ EOF;
         $this->assertTrue($matches[2][0] === "File.doc");
         $this->assertTrue($matches[2][1] === 419);
     }
-
 }

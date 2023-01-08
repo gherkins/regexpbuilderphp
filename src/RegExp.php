@@ -1,10 +1,11 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Gherkins\RegExpBuilderPHP;
 
 class RegExp
 {
-
     protected string $_expr;
 
     protected string $_flags;
@@ -25,17 +26,17 @@ class RegExp
         }
     }
 
-    public function __toString() : string
+    public function __toString(): string
     {
         return $this->getExpression();
     }
 
-    public function getExpression() : string
+    public function getExpression(): string
     {
         return $this->_expr;
     }
 
-    public function getFlags() : string
+    public function getFlags(): string
     {
         return $this->_flags;
     }
@@ -45,7 +46,7 @@ class RegExp
      *
      * @deprecated
      */
-    public function test(string $string) : bool
+    public function test(string $string): bool
     {
         return $this->matches($string);
     }
@@ -53,7 +54,7 @@ class RegExp
     /**
      * check string w/ preg_match
      */
-    public function matches(string $string) : bool
+    public function matches(string $string): bool
     {
         $matches = [];
 
@@ -71,7 +72,7 @@ class RegExp
     /**
      * @return mixed[]
      */
-    public function exec(string $haystack) : array
+    public function exec(string $haystack): array
     {
         return $this->findIn($haystack);
     }
@@ -79,7 +80,7 @@ class RegExp
     /**
      * @return string[]
      */
-    public function findIn(string $haystack) : array
+    public function findIn(string $haystack): array
     {
         $matches = [];
         call_user_func_array(
