@@ -5,85 +5,37 @@ namespace Gherkins\RegExpBuilderPHP;
 class RegExpBuilder
 {
 
-    /**
-     * @var string
-     */
-    protected $_flags = "";
+    protected string $_flags = "";
 
-    /**
-     * @var int
-     */
-    protected $_pregMatchFlags = "";
+    protected ?int $_pregMatchFlags = null;
 
-    /**
-     * @var array
-     */
-    protected $_literal = [];
+    protected array $_literal = [];
 
-    /**
-     * @var int
-     */
-    protected $_groupsUsed = 0;
+    protected int $_groupsUsed = 0;
 
-    /**
-     * @var int
-     */
-    protected $_min;
+    protected int $_min;
 
-    /**
-     * @var int
-     */
-    protected $_max;
+    protected int $_max;
 
-    /**
-     * @var string
-     */
-    protected $_of;
+    protected string $_of;
 
-    /**
-     * @var string
-     */
-    protected $_ofAny;
+    protected bool $_ofAny;
 
-    /**
-     * @var string
-     */
-    protected $_ofGroup;
+    protected int $_ofGroup;
 
-    /**
-     * @var string
-     */
-    protected $_from;
+    protected string $_from;
 
-    /**
-     * @var string
-     */
-    protected $_notFrom;
+    protected string $_notFrom;
 
-    /**
-     * @var string
-     */
-    protected $_like;
+    protected string $_like;
 
-    /**
-     * @var string
-     */
-    protected $_either;
+    protected string $_either;
 
-    /**
-     * @var bool
-     */
-    protected $_reluctant;
+    protected bool $_reluctant;
 
-    /**
-     * @var bool
-     */
-    protected $_capture;
+    protected bool $_capture;
 
-    /**
-     * @var string
-     */
-    protected $_captureName;
+    protected string $_captureName;
 
     public function __construct()
     {
@@ -235,7 +187,7 @@ class RegExpBuilder
 
         return $this;
     }
-    
+
     public function startOfInput() : RegExpBuilder
     {
         $this->_literal[] = "(?:^)";
@@ -495,7 +447,7 @@ class RegExpBuilder
     {
         return $this->min(1)->ofAny();
     }
-    
+
 
     public function any() : RegExpBuilder
     {
