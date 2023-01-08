@@ -8,17 +8,14 @@ use PHPUnit\Framework\TestCase;
 final class RegExpBuilderTest extends TestCase
 {
 
-    /**
-     * @var RegExpBuilder
-     */
-    private $r;
+    private RegExpBuilder $r;
 
     protected function setUp(): void
     {
         $this->r = new RegExpBuilder();
     }
 
-    public function testRegExp()
+    public function testRegExp(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -35,7 +32,7 @@ final class RegExpBuilderTest extends TestCase
 
     }
 
-    public function testMoney()
+    public function testMoney(): void
     {
         $regEx = $this->r
             ->find("€")
@@ -53,7 +50,7 @@ final class RegExpBuilderTest extends TestCase
 
     }
 
-    public function testMoney2()
+    public function testMoney2(): void
     {
         $regEx = $this->r
             ->find("€")
@@ -74,7 +71,7 @@ final class RegExpBuilderTest extends TestCase
 
     }
 
-    public function testAllMoney()
+    public function testAllMoney(): void
     {
         $builder1 = $this->r
             ->find("€")
@@ -108,7 +105,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertTrue($combined->getRegExp()->matches("€452.000,99"));
     }
 
-    public function testMaybe()
+    public function testMaybe(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -121,7 +118,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("12aabba1"));
     }
 
-    public function testMaybeSome()
+    public function testMaybeSome(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -134,7 +131,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("12aabba1"));
     }
 
-    public function testSome()
+    public function testSome(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -147,7 +144,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("12aabba1"));
     }
 
-    public function testLettersDigits()
+    public function testLettersDigits(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -164,7 +161,7 @@ final class RegExpBuilderTest extends TestCase
 
     }
 
-    public function testNotLetter()
+    public function testNotLetter(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -175,7 +172,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("asd425"));
     }
 
-    public function testNotLetters()
+    public function testNotLetters(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -189,7 +186,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("asd425"));
     }
 
-    public function testNotDigit()
+    public function testNotDigit(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -201,7 +198,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("45asd"));
     }
 
-    public function testNotDigits()
+    public function testNotDigits(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -215,7 +212,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("425asd"));
     }
 
-    public function testAny()
+    public function testAny(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -229,7 +226,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches(""));
     }
 
-    public function testOfAny()
+    public function testOfAny(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -244,7 +241,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("425asd"));
     }
 
-    public function testOfAny2()
+    public function testOfAny2(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -255,7 +252,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertTrue($regEx->matches("pqr"));
     }
 
-    public function testAnything()
+    public function testAnything(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -267,7 +264,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertTrue($regEx->matches("4"));
     }
 
-    public function testAnythingBut()
+    public function testAnythingBut(): void
     {
         $regEx = $this->r
             ->startOfInput()
@@ -281,7 +278,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("admin"));
     }
 
-    public function testAnythingBut2()
+    public function testAnythingBut2(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -296,7 +293,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("Y"));
     }
 
-    public function testNeitherNor()
+    public function testNeitherNor(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -310,7 +307,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("juice"));
     }
 
-    public function testNeitherNor2()
+    public function testNeitherNor2(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -327,7 +324,7 @@ final class RegExpBuilderTest extends TestCase
 
     }
 
-    public function testLowerCasew()
+    public function testLowerCasew(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -340,7 +337,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("A34"));
     }
 
-    public function testLowerCaseLetters()
+    public function testLowerCaseLetters(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -355,7 +352,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("A34"));
     }
 
-    public function testUpperCaseLetter()
+    public function testUpperCaseLetter(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -368,7 +365,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("34aa"));
     }
 
-    public function testUpperCaseLetters()
+    public function testUpperCaseLetters(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -383,7 +380,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("a34"));
     }
 
-    public function testLetterDigit()
+    public function testLetterDigit(): void
     {
         $regEx = $this->r
             ->ignoreCase()
@@ -399,7 +396,7 @@ final class RegExpBuilderTest extends TestCase
 
     }
 
-    public function testTab()
+    public function testTab(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -411,7 +408,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("p\t"));
     }
 
-    public function testTab2()
+    public function testTab2(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -423,7 +420,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertTrue($regEx->matches("p\tq"));
     }
 
-    public function testTabs()
+    public function testTabs(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -438,7 +435,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("p\t"));
     }
 
-    public function testWhiteSpace()
+    public function testWhiteSpace(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -456,7 +453,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches(" p dr "));
     }
 
-    public function testMoreWhiteSpace()
+    public function testMoreWhiteSpace(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -470,7 +467,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertTrue($regEx->matches("\tpdr\t"));
     }
 
-    public function testNotWhitespace()
+    public function testNotWhitespace(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -483,7 +480,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("\t45asd"));
     }
 
-    public function testNotWhitespace2()
+    public function testNotWhitespace2(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -497,7 +494,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("\t45asd"));
     }
 
-    public function testLineBreak()
+    public function testLineBreak(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -512,7 +509,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("\t45asd"));
     }
 
-    public function testLineBreaks()
+    public function testLineBreaks(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -528,7 +525,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("\t45asd"));
     }
 
-    public function testStartOfLine()
+    public function testStartOfLine(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -540,7 +537,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("qp"));
     }
 
-    public function testEndOfLine()
+    public function testEndOfLine(): void
     {
         $regEx = $this->r
             ->exactly(1)
@@ -552,7 +549,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("pq"));
     }
 
-    public function testEitherLikeOrLike()
+    public function testEitherLikeOrLike(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -568,7 +565,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("qqp"));
     }
 
-    public function testOrLikeChain()
+    public function testOrLikeChain(): void
     {
         $regEx = $this->r
             ->eitherFind($this->r->getNew()->exactly(1)->of("p"))
@@ -583,7 +580,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("s"));
     }
 
-    public function testEitherOr()
+    public function testEitherOr(): void
     {
         $regEx = $this->r
             ->eitherFind("p")
@@ -596,7 +593,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("r"));
     }
 
-    public function testAnyOf()
+    public function testAnyOf(): void
     {
         $regEx = $this->r
             ->anyOf(
@@ -624,7 +621,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertTrue($regEx->matches("p"));
     }
 
-    public function testExactly()
+    public function testExactly(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -638,7 +635,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("pppp"));
     }
 
-    public function testMin()
+    public function testMin(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -653,7 +650,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("p"));
     }
 
-    public function testMax()
+    public function testMax(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -669,7 +666,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("pppppppp"));
     }
 
-    public function testMinMax()
+    public function testMinMax(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -687,7 +684,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("pppppppppppp"));
     }
 
-    public function testOf()
+    public function testOf(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -700,7 +697,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("p p p p pp"));
     }
 
-    public function testOfGroup()
+    public function testOfGroup(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -714,7 +711,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertTrue($regEx->matches("pppqpppq"));
     }
 
-    public function testGroupIncrement()
+    public function testGroupIncrement(): void
     {
         //aa--aa--
         $builder1 = $this->r
@@ -751,7 +748,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regExp->matches("abcdef312"));
     }
 
-    public function testNamedGroup()
+    public function testNamedGroup(): void
     {
         $regEx = $this->r
             ->exactly(3)->digits()->asGroup("numbers")
@@ -762,7 +759,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertTrue(array_key_exists("numbers", $res));
     }
 
-    public function testFrom()
+    public function testFrom(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -778,7 +775,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("pyy"));
     }
 
-    public function testNotFrom()
+    public function testNotFrom(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -791,7 +788,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("mnq"));
     }
 
-    public function testLike()
+    public function testLike(): void
     {
         $regEx = $this->r
             ->startOfLine()
@@ -809,7 +806,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("qppqpp"));
     }
 
-    public function testReluctantly()
+    public function testReluctantly(): void
     {
         $regEx = $this->r
             ->exactly(2)->of("p")
@@ -821,7 +818,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertTrue($matches[0] == "pprrrrpp");
     }
 
-    public function testAhead()
+    public function testAhead(): void
     {
         $regEx = $this->r
             ->exactly(1)->of("dart")
@@ -837,7 +834,7 @@ final class RegExpBuilderTest extends TestCase
 
     }
 
-    public function testNotAhead()
+    public function testNotAhead(): void
     {
         $regEx = $this->r
             ->exactly(1)->of("dart")
@@ -849,7 +846,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("dartpqr"));
     }
 
-    public function testAsGroup()
+    public function testAsGroup(): void
     {
         $regEx = $this->r
             ->min(1)->max(3)->of("p")
@@ -861,7 +858,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertTrue($matches[1] == "dart");
     }
 
-    public function testOptional()
+    public function testOptional(): void
     {
         $regEx = $this->r
             ->min(1)->max(3)->of("p")
@@ -872,7 +869,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertTrue($regEx->matches("pdartq"));
     }
 
-    public function testDelimiter()
+    public function testDelimiter(): void
     {
         $regEx = $this->r
             ->startOfInput()
@@ -885,7 +882,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertTrue($regEx->matches("123/ab"));
     }
 
-    public function testSomething()
+    public function testSomething(): void
     {
         $regEx = $this->r
             ->min(1)->max(3)->of("p")
@@ -896,7 +893,7 @@ final class RegExpBuilderTest extends TestCase
         $this->assertFalse($regEx->matches("p"));
     }
 
-    public function testAlias()
+    public function testAlias(): void
     {
         $regEx = $this->r
             ->startOfLine()

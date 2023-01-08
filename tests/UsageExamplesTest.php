@@ -7,18 +7,7 @@ use PHPUnit\Framework\TestCase;
 
 final class UsageExamplesTest extends TestCase
 {
-
-    /**
-     * @var RegExpBuilder
-     */
-    private $r;
-
-    protected function setUp(): void
-    {
-        $this->r = new RegExpBuilder();
-    }
-
-    public function testUsageExample()
+    public function testUsageExample(): void
     {
         $builder = new RegExpBuilder();
 
@@ -44,7 +33,7 @@ final class UsageExamplesTest extends TestCase
 
     }
 
-    public function testUsageExample2()
+    public function testUsageExample2(): void
     {
         $builder = new RegExpBuilder();
 
@@ -79,7 +68,7 @@ final class UsageExamplesTest extends TestCase
 
     }
 
-    public function testUsageExample3()
+    public function testUsageExample3(): void
     {
         $builder = new RegExpBuilder();
 
@@ -108,7 +97,7 @@ EOF;
         $this->assertTrue($matches[2] === "File.doc");
     }
 
-    public function testReplace()
+    public function testReplace(): void
     {
         $builder = new RegExpBuilder();
 
@@ -130,7 +119,7 @@ EOF;
         $this->assertTrue("99 bottles of beer on the wall" === $text);
     }
 
-    public function testPregMatchFlags()
+    public function testPregMatchFlags(): void
     {
         $builder = new RegExpBuilder();
 

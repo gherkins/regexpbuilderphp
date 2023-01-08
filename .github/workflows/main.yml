@@ -16,8 +16,8 @@ jobs:
             -   uses: php-actions/composer@v6
             -   uses: php-actions/phpstan@v3
                 with:
-                    path: src/
-                    level: 5
+                    path: src tests
+                    level: max
 
     phpunit:
 

@@ -9,6 +9,9 @@ class RegExpBuilder
 
     protected ?int $_pregMatchFlags = null;
 
+    /**
+     * @var string[] $_literal
+     */
     protected array $_literal = [];
 
     protected int $_groupsUsed = 0;
@@ -27,9 +30,9 @@ class RegExpBuilder
 
     protected string $_notFrom;
 
-    protected string $_like;
+    protected ?string $_like;
 
-    protected string $_either;
+    protected ?string $_either;
 
     protected bool $_reluctant;
 
@@ -42,10 +45,7 @@ class RegExpBuilder
         $this->clear();
     }
 
-    /**
-     * reset values
-     */
-    private function clear()
+    private function clear(): void
     {
         $this->_min       = -1;
         $this->_max       = -1;
@@ -60,7 +60,7 @@ class RegExpBuilder
         $this->_capture   = false;
     }
 
-    private function flushState()
+    private function flushState(): void
     {
         if ($this->_of != "" || $this->_ofAny || $this->_ofGroup > 0 || $this->_from != "" || $this->_notFrom != "" || $this->_like != "") {
             $captureLiteral   = $this->_capture
@@ -124,7 +124,7 @@ class RegExpBuilder
         return implode("", $this->_literal);
     }
 
-    private function combineGroupNumberingAndGetLiteralral(RegExpBuilder $r)
+    private function combineGroupNumberingAndGetLiteralral(RegExpBuilder $r): ?string
     {
         $literal = $this->incrementGroupNumbering($r->getLiteral(), $this->_groupsUsed);
         $this->_groupsUsed += $r->_groupsUsed;
@@ -132,7 +132,7 @@ class RegExpBuilder
         return $literal;
     }
 
-    private function incrementGroupNumbering($literal, $increment)
+    private function incrementGroupNumbering(string $literal, int $increment): ?string
     {
         if ($increment > 0) {
             $literal = preg_replace_callback(
@@ -156,7 +156,7 @@ class RegExpBuilder
         return new RegExp(implode("", $this->_literal), $this->_flags, (int)$this->_pregMatchFlags);
     }
 
-    private function addFlag($flag)
+    private function addFlag(string $flag): RegExpBuilder
     {
         if (strpos($this->_flags, $flag) === false) {
             $this->_flags .= $flag;
@@ -181,7 +181,7 @@ class RegExpBuilder
         return $this->addFlag("g");
     }
 
-    public function pregMatchFlags($flags) : RegExpBuilder
+    public function pregMatchFlags(int $flags) : RegExpBuilder
     {
         $this->_pregMatchFlags = $flags;
 
@@ -217,6 +217,9 @@ class RegExpBuilder
         return $this->endOfInput();
     }
 
+    /**
+     * @param string|RegExpBuilder $r
+     */
     public function eitherFind(mixed $r) : RegExpBuilder
     {
         if (is_string($r)) {
@@ -235,6 +238,9 @@ class RegExpBuilder
         return $this;
     }
 
+    /**
+     * @param string|RegExpBuilder $r
+     */
     public function orFind(mixed $r) : RegExpBuilder
     {
         if (is_string($r)) {
@@ -245,7 +251,7 @@ class RegExpBuilder
     }
 
     /**
-     * @param array<int, string> $r
+     * @param array<int, string|RegExpBuilder> $r
      */
     public function anyOf(array $r) : RegExpBuilder
     {
@@ -263,7 +269,7 @@ class RegExpBuilder
         return $this;
     }
 
-    private function setOr(mixed $r) : RegExpBuilder
+    private function setOr(RegExpBuilder $r) : RegExpBuilder
     {
         $either = $this->_either;
         $or     = $this->combineGroupNumberingAndGetLiteralral($r);
@@ -281,7 +287,9 @@ class RegExpBuilder
         return $this;
     }
 
-
+    /**
+     * @param string|RegExpBuilder $r
+     */
     public function neither(mixed $r) : RegExpBuilder
     {
         if (is_string($r)) {
@@ -291,7 +299,10 @@ class RegExpBuilder
         return $this->notAhead($r);
     }
 
-    public function nor(string $r) : RegExpBuilder
+    /**
+     * @param string|RegExpBuilder $r
+     */
+    public function nor(mixed $r) : RegExpBuilder
     {
         if ($this->_min == 0 && $this->_ofAny) {
             $this->_min   = -1;
@@ -394,7 +405,7 @@ class RegExpBuilder
     }
 
 
-    public function notAhead(mixed $r) : RegExpBuilder
+    public function notAhead(RegExpBuilder $r) : RegExpBuilder
     {
         $this->flushState();
         $this->_literal[] = "(?!" . $this->combineGroupNumberingAndGetLiteralral($r) . ")";
