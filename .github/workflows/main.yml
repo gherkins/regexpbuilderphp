@@ -39,25 +39,3 @@ jobs:
 
             -   name: Run test suite
                 run: composer run-script test
-
-    coverage-badge:
-        needs: phpunit
-        runs-on: ubuntu-latest
-        steps:
-
-            -   uses: actions/checkout@v3
-
-            -   name: Setup PHP
-                uses: shivammathur/setup-php@v2
-                with:
-                    php-version: 8.2
-
-            -   uses: php-actions/composer@v6
-
-            -   name: Run test suite
-                run: composer run-script test
-            -   name: phpunit-coverage-badge
-                uses: timkrase/phpunit-coverage-badge@v1.2.0
-                with:
-                    push_badge: true
-                    repo_token: ${{ secrets.GITHUB_TOKEN }}
