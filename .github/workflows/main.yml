@@ -39,3 +39,24 @@ jobs:
 
             -   name: Run test suite
                 run: composer run-script test
+
+    coverage100:
+        needs: phpunit
+        runs-on: ubuntu-latest
+        steps:
+
+            -   uses: actions/checkout@v3
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@v2
+                with:
+                    php-version: 8.2
+
+            -   uses: php-actions/composer@v6
+
+            -   name: Code Coverage Check
+                uses: sourcetoad/phpunit-coverage-action@v1
+                with:
+                    clover_report_path: clover.xml
+                    min_coverage_percent: 100
+                    fail_build_on_under: true
