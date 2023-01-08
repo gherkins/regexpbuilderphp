@@ -17,7 +17,7 @@ jobs:
             -   uses: php-actions/phpstan@v3
                 with:
                     path: src/
-                    level: 3
+                    level: 5
 
     phpunit:
 

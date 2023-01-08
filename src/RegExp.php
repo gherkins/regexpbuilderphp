@@ -5,27 +5,15 @@ namespace Gherkins\RegExpBuilderPHP;
 class RegExp
 {
 
-    /**
-     * @var String
-     */
-    protected $_expr;
+    protected string $_expr;
 
-    /**
-     * @var String
-     */
-    protected $_flags;
+    protected string $_flags;
 
-    /**
-     * @var int
-     */
-    protected $_pregMatchFlags;
+    protected int $_pregMatchFlags;
 
-    /**
-     * @var String
-     */
-    protected $_method = "preg_match";
+    protected string $_method = "preg_match";
 
-    public function __construct($expr, $flags, $pregMatchFlags = 0)
+    public function __construct(string $expr, string $flags, int $pregMatchFlags = 0)
     {
         $this->_expr  = $expr;
         $this->_flags = $flags;
@@ -103,6 +91,7 @@ class RegExp
             ]
         );
 
+        /* @phpstan-ignore-next-line */
         if (!isset($matches[1]) && isset($matches[0]) && is_array($matches[0])) {
             return $matches[0];
         }
