@@ -8,8 +8,10 @@
 ```
 ## human-readable regular expressions for PHP
 [![release](https://img.shields.io/github/release/gherkins/regexpbuilderphp.svg?style=flat-square)](https://github.com/gherkins/regexpbuilderphp/releases)
-[![phpunit](https://github.com/gherkins/regexpbuilderphp/actions/workflows/main.yml/badge.svg)](https://github.com/gherkins/regexpbuilderphp/actions)
-[![phpunit](https://raw.githubusercontent.com/gherkins/regexpbuilderphp/main/coverage_badge.svg)](https://github.com/gherkins/regexpbuilderphp/actions)
+![release](https://img.shields.io/badge/php-%5E8.0-blue?style=flat-square)
+[![phpunit](https://img.shields.io/github/actions/workflow/status/gherkins/regexpbuilderphp/main.yml?style=flat-square&color=lightgreen)](https://github.com/gherkins/regexpbuilderphp/actions)
+[![release](https://img.shields.io/badge/coverage-100%25-lightgreen?style=flat-square)](https://github.com/gherkins/regexpbuilderphp/releases)
+
 
 PHP port of `regexpbuilderjs`
 
