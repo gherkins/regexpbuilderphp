@@ -54,6 +54,9 @@ jobs:
 
             -   uses: php-actions/composer@v6
 
+            -   name: generate coverage report
+                run: composer run-script test
+
             -   name: Code Coverage Check
                 uses: sourcetoad/phpunit-coverage-action@v1
                 with:
