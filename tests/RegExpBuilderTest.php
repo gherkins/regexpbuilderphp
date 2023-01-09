@@ -894,8 +894,6 @@ final class RegExpBuilderTest extends TestCase
             ->upperCaseLetter()
             ->getRegExp();
 
-        //check deprecated alias methods
-        $this->assertTrue($regEx->test("A24"));
         $this->assertTrue($regEx->matches("A24"));
 
         $this->assertArrayHasKey(0, $regEx->exec("A45"));

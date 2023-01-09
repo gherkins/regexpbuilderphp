@@ -642,9 +642,6 @@ class RegExpBuilder
         return preg_quote($s, "/");
     }
 
-    /**
-     * get a fresh instance
-     */
     public function getNew(): RegExpBuilder
     {
         $class = get_class($this);

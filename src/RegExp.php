@@ -41,19 +41,6 @@ class RegExp
         return $this->_flags;
     }
 
-    /**
-     * alias for matches
-     *
-     * @deprecated
-     */
-    public function test(string $string): bool
-    {
-        return $this->matches($string);
-    }
-
-    /**
-     * check string w/ preg_match
-     */
     public function matches(string $string): bool
     {
         $matches = [];
