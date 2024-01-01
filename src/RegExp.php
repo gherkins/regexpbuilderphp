@@ -93,7 +93,7 @@ class RegExp
     {
         return preg_replace_callback(
             sprintf("/%s/%s", $this->_expr, $this->_flags),
-            function ($hit) use ($callback) { /* @phpstan-ignore-line */
+            function ($hit) use ($callback) {
                 return call_user_func($callback, $hit[0]);
             },
             $string
