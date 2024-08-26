@@ -8,7 +8,7 @@
 ```
 ## human-readable regular expressions for PHP
 [![release](https://img.shields.io/github/release/gherkins/regexpbuilderphp.svg?style=flat-square)](https://github.com/gherkins/regexpbuilderphp/releases)
-![release](https://img.shields.io/badge/php-%5E8.1-blue?style=flat-square)
+![release](https://img.shields.io/badge/php-%5E8.*-blue?style=flat-square)
 [![phpunit](https://img.shields.io/github/actions/workflow/status/gherkins/regexpbuilderphp/main.yml?style=flat-square&color=lightgreen)](https://github.com/gherkins/regexpbuilderphp/actions)
 [![release](https://img.shields.io/badge/coverage-100%25-lightgreen?style=flat-square)](https://github.com/gherkins/regexpbuilderphp/releases)
 ![release](https://img.shields.io/badge/much-wow-lightgreen?style=flat-square)
