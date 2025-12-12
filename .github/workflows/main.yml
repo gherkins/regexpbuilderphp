@@ -12,7 +12,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-            -   uses: actions/checkout@v3
+            -   uses: actions/checkout@v5
             -   uses: php-actions/composer@v6
             -   uses: php-actions/phpstan@v3
                 with:
@@ -25,10 +25,10 @@ jobs:
         needs: static
         strategy:
             matrix:
-                php-versions: [ '8.2', '8.3' ]
+                php-versions: [ '8.2', '8.3', '8.4', '8.5' ]
 
         steps:
-            -   uses: actions/checkout@v3
+            -   uses: actions/checkout@v5
 
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
@@ -45,7 +45,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
 
-            -   uses: actions/checkout@v3
+            -   uses: actions/checkout@v5
 
             -   name: Setup PHP
                 uses: shivammathur/setup-php@v2
