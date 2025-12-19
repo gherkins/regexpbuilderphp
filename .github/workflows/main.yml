@@ -52,11 +52,12 @@ jobs:
                 uses: shivammathur/setup-php@v2
                 with:
                     php-version: 8.3
+                    coverage: pcov
 
             -   uses: php-actions/composer@v6
 
             -   name: generate coverage report
-                run: composer run-script test
+                run: vendor/bin/phpunit --coverage-clover clover.xml
 
             -   name: Code Coverage Check
                 uses: sourcetoad/phpunit-coverage-action@v1
