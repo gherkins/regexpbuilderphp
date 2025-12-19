@@ -414,7 +414,7 @@ class RegExpBuilder
         return $this;
     }
 
-    public function asGroup(string $name = null): RegExpBuilder
+    public function asGroup(?string $name = null): RegExpBuilder
     {
         $this->_capture = true;
         $this->_captureName = $name;

@@ -57,7 +57,7 @@ class RegExp
     }
 
     /**
-     * @return mixed[]
+     * @return array<int|string, string|array<int,mixed>>|array<int,mixed>
      */
     public function exec(string $haystack): array
     {
@@ -65,10 +65,11 @@ class RegExp
     }
 
     /**
-     * @return string[]
+     * @return array<int|string, string|array<int,mixed>>|array<int,mixed>
      */
     public function findIn(string $haystack): array
     {
+        /** @var array<int|string, string|array<int,mixed>> $matches */
         $matches = [];
         call_user_func_array(
             $this->_method, /* @phpstan-ignore-line */
@@ -80,7 +81,6 @@ class RegExp
             ]
         );
 
-        /* @phpstan-ignore-next-line */
         if (!isset($matches[1]) && isset($matches[0]) && is_array($matches[0])) {
             return $matches[0];
         }
@@ -89,12 +89,17 @@ class RegExp
     }
 
 
-    public function replace(string $string, callable $callback): mixed
+    /**
+     * @param callable(string): string $callback
+     * @return string|null
+     */
+    public function replace(string $string, callable $callback): ?string
     {
         return preg_replace_callback(
             sprintf("/%s/%s", $this->_expr, $this->_flags),
-            function ($hit) use ($callback) {
-                return call_user_func($callback, $hit[0]);
+            function (array $hit) use ($callback): string {
+                $res = call_user_func($callback, $hit[0]);
+                return (string) $res;
             },
             $string
         );

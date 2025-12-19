@@ -92,9 +92,9 @@ EOF;
 
         $matches = $regExp->exec($text);
 
-        $this->assertTrue($matches[0] === "SomeFile.pdf");
-        $this->assertTrue($matches[1] === "doc_04.pdf");
-        $this->assertTrue($matches[2] === "File.doc");
+        $this->assertSame("SomeFile.pdf", $matches[0]);
+        $this->assertSame("doc_04.pdf", $matches[1]);
+        $this->assertSame("File.doc", $matches[2]);
     }
 
     public function testReplace(): void
@@ -111,12 +111,13 @@ EOF;
 
         $text = $regExp->replace(
             $text,
-            function ($match) {
-                return (int)$match + 1;
+            function (string $match): string {
+                // convert to int, increment and cast back to string
+                return (string)(((int)$match) + 1);
             }
         );
 
-        $this->assertTrue("99 bottles of beer on the wall" === $text);
+        $this->assertSame("99 bottles of beer on the wall", $text);
     }
 
     public function testPregMatchFlags(): void
@@ -144,16 +145,16 @@ EOF;
 
         $matches = $regExp->exec($text);
 
-        $this->assertTrue(is_array($matches[0]));
-        $this->assertTrue($matches[0][0] === "SomeFile.pdf");
-        $this->assertTrue($matches[0][1] === 73);
+        $this->assertIsArray($matches[0]);
+        $this->assertSame("SomeFile.pdf", $matches[0][0]);
+        $this->assertSame(73, $matches[0][1]);
 
-        $this->assertTrue(is_array($matches[1]));
-        $this->assertTrue($matches[1][0] === "doc_04.pdf");
-        $this->assertTrue($matches[1][1] === 226);
+        $this->assertIsArray($matches[1]);
+        $this->assertSame("doc_04.pdf", $matches[1][0]);
+        $this->assertSame(226, $matches[1][1]);
 
-        $this->assertTrue(is_array($matches[2]));
-        $this->assertTrue($matches[2][0] === "File.doc");
-        $this->assertTrue($matches[2][1] === 419);
+        $this->assertIsArray($matches[2]);
+        $this->assertSame("File.doc", $matches[2][0]);
+        $this->assertSame(419, $matches[2][1]);
     }
 }

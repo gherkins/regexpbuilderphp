@@ -25,11 +25,7 @@ final class RegExpBuilderTest extends TestCase
             ->getRegExp();
 
 
-        $this->assertTrue(is_string($regEx->getFlags()));
-        $this->assertTrue($regEx->getFlags() === "m");
-
-        $this->assertTrue(is_string($regEx->__toString()));
-        $this->assertTrue(is_string($regEx->getExpression()));
+        $this->assertSame("m", $regEx->getFlags());
     }
 
     public function testMoney(): void
@@ -749,6 +745,7 @@ final class RegExpBuilderTest extends TestCase
             ->exactly(3)->digits()->asGroup("numbers")
             ->getRegExp();
 
+        /** @var array<string, mixed> $res */
         $res = $regEx->findIn("hello-123-abc");
 
         $this->assertTrue(array_key_exists("numbers", $res));
