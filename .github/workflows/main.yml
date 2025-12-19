@@ -58,8 +58,9 @@ jobs:
             -   name: generate coverage report
                 run: composer run-script test
 
-            -   name: Coverage Check
-                uses: docker://ghcr.io/ericsizemore/phpunit-coverage-check-action
+            -   name: Code Coverage Check
+                uses: sourcetoad/phpunit-coverage-action@v1
                 with:
-                    clover_file: 'build/logs/clover.xml'
-                    threshold: 100
+                    clover_report_path: clover.xml
+                    min_coverage_percent: 100
+                    fail_build_on_under: true
