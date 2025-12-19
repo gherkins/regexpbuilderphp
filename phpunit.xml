@@ -5,11 +5,9 @@
          colors="true">
 
   <coverage>
-    <filter>
     <include>
       <directory suffix=".php">src</directory>
     </include>
-    </filter>
     <report>
       <clover outputFile="clover.xml" />
     </report>
