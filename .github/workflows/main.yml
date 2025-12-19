@@ -18,7 +18,7 @@ jobs:
                 with:
                     path: src tests
                     level: max
-                    php-version: 8.3
+                    php_version: 8.3
 
     phpunit:
 
