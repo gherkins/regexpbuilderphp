@@ -91,15 +91,14 @@ class RegExp
 
     /**
      * @param callable(string): string $callback
-     * @return string|null
      */
     public function replace(string $string, callable $callback): ?string
     {
         return preg_replace_callback(
             sprintf("/%s/%s", $this->_expr, $this->_flags),
+            /** @param array<int, string> $hit */
             function (array $hit) use ($callback): string {
-                $res = call_user_func($callback, $hit[0]);
-                return (string) $res;
+                return $callback($hit[0]);
             },
             $string
         );

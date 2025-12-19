@@ -28,6 +28,18 @@ final class RegExpBuilderTest extends TestCase
         $this->assertSame("m", $regEx->getFlags());
     }
 
+    public function testRegExpToString(): void
+    {
+        $regEx = $this->r
+            ->startOfLine()
+            ->exactly(1)
+            ->of("p")
+            ->getRegExp();
+
+        $this->assertSame($regEx->getExpression(), (string) $regEx);
+        $this->assertSame("(?:^)(?:(?:p){1,1})", $regEx->getExpression());
+    }
+
     public function testMoney(): void
     {
         $regEx = $this->r
